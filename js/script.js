@@ -52,19 +52,10 @@ function iterateResults(data) {
 	
 	});
 	setTimeout(function() {
-		$("body").addClass("loaded");
-	}, 200); // 0.2 second delay
+		$("#loading").addClass("loaded");
+	}, 500); // 0.5 second delay
 
 }
-// $.ajax({
-// 	url: "http://proxy.interaction.courses/https://cat-fact.herokuapp.com/facts",
-// 	dataType: "jsonp",
-// 	success: function(results) {
-// 		console.log(results);
-// 		jsonAsString = JSON.stringify(results, null, 2);
-// 		$("#results").html(jsonAsString);
-// 	}
-// });
 
 $(document).ready(function() {
 
@@ -75,10 +66,18 @@ $(document).ready(function() {
         queryData(document.forms["search"]["searchbar"].value);
     });
 
+    $("#searchbar").keypress(function(e) {
+        if (e.which == 13) {
+            event.preventDefault();
+            queryData(document.forms["search"]["searchbar"].value);
+        }
+    })
+
 });
 
 function searchData(query) {   
     $("#records").html("");
+    $("#loading").removeClass("loaded");
     var data = {
         resource_id: 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040', // the resource id
         limit: 100, // get 5 results
@@ -100,6 +99,7 @@ function searchData(query) {
 
 function queryData(query) {
     $("#records").html("");
+    $("#loading").removeClass("loaded");
     var resource_id = 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040'
     var data = {
         resource_id: 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040', // the resource id

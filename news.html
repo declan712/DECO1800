@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>I like Trains</title>
+    <title>example newspaper</title>
     <link rel="stylesheet" href="css/style.css"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/script.js"></script>
 </head>
 
-<body class="loaded">
+<body>
     <nav>
         <ul>
             <li>
@@ -19,20 +19,21 @@
             </li>
         </ul>
     </nav>
-    <section>
-        train goes toot toot
-        <form id="search">
-            <input type="text" name="searchbar" id="searchbar">
-            <input type="button" value="Search" id="search-button">
-        </form>
-        <form id="filter">
-			<input id="filter-text" type="text" placeholder="Filter by Record Text" value="">
-		</form>
-		<p id="record-count"><strong>0</strong> Records Displayed</p>
-    </section>
     <div id="loading" class="loaded"></div>
     <section id="records"></section>
+    <section id="paper">
+        <article>
+            <h1>Headline</h1>
+            <div id="imgplaceholder"></div>
+            <p id="article-date">
+                1 August 1890
+            </p>
+            <p id="article-text">
+                lorem ipsum something something i cant be bother looking it up right
+            </p>
 
+        </article>
+    </section>
     <article class="record record-template">
 			<h2>Name</h2>
 			<p class="year">Record Year</p>
