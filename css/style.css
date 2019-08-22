@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    padding:0;
+    margin:0;
+}
+
+nav {
+    position: sticky;
+    z-index: 10;
+    top:0;
+    background-color: #222222;
+    width:100%;
+    color: #DDDDDD;
+    padding: 1em;
+}
+body {
+    position: relative;
+    padding-bottom: 200px;
+}
+body > section {
+    margin: 2em;
+    padding: 1em;
+    background-color: #AAAAAA;
+
+}
+
+footer {
+    background-color: #1f1f1f;
+    color: #DDDDDD;
+    width: 100%;
+    position: absolute;
+    bottom:0;
+    padding: 3em;
+    text-align: center;
+}
+#records {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.record {
+    display:block;
+    width:100%;
+    padding:2em;
+    margin: 1em;
+    background-color: #BBBBBB;
+    box-shadow: #222222 0 5px 5px;
+    position: relative;
+}
+.record.record-template {
+    display:none;
+    border: 1px solid red;
+}
+.record .record-content {
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
