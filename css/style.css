@@ -72,8 +72,11 @@ footer {
     align-items: flex-start;
 }
 #loading {
-    background: radial-gradient(white 10%, transparent 10%), linear-gradient(transparent 40%, #222222 40%, #222222 60%, transparent 60%), linear-gradient(90deg, transparent 40%, #222222 40%, #222222 60%, transparent 60%);
-    border-radius: 100%;
+    /* background: radial-gradient(white 10%, transparent 10%), linear-gradient(transparent 40%, #222222 40%, #222222 60%, transparent 60%), linear-gradient(90deg, transparent 40%, #222222 40%, #222222 60%, transparent 60%); */
+   
+    border: 10px solid grey;
+    border-top: 10px solid #AA22AA;
+    border-radius: 50px;
     height: 100px;
     width:100px;
     position: absolute;
@@ -101,15 +104,67 @@ footer {
 
 #paper {
     background: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260);
-    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size: auto;
     background-position: 50%;
+    height:auto;
     box-shadow: #222222 5px 5px 5px;
-    display: grid;
-    grid-template-columns: 5% 35% 10% 35% 5%;
-    grid-template-rows: 5% 5% 10% 50% 30%;
 }
-#imgplaceholder {
-
+#paper article {
+    font-family: 'Times New Roman', Times, serif;
+    display: grid;
+    min-height:50vh;
+    width:100%;
+    grid-template-columns: 5% 40% 10% 40% 5%;
+    grid-template-rows: auto auto auto minmax(250px,50%) auto auto;
+    grid-template-areas: '. header header header .'
+                         '. . date . .'
+                         '. headline headline headline .'
+                         '. text text pic .'
+                         '. text text pic .'
+                         '. text2 text2 text2 .'
+}
+#article-image {
     background-color: #222222;
-    grid-area: 2/2/4/2;
+    background: url(https://images.pexels.com/photos/2346216/pexels-photo-2346216.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+    background-position: 25% 75%;
+    background-repeat: no-repeat;
+    background-size: 150%;
+    grid-area: pic;
+    width:100%;
+}
+
+#paper h1 {
+    text-align: center;
+    grid-area: header;
+    font-size: 1.5em;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#paper h2 {
+    font-size: 3em;
+    text-align: center;
+    grid-area: headline;
+}
+#article-date {
+    text-align: center;
+    white-space: nowrap;
+    grid-area: date;
+}
+#article-text {
+    grid-area: text;
+}
+#article-text-additional {
+    grid-area: text2;
+}
+
+@media screen and (max-width: 800px) {
+    #paper article {
+        grid-template-areas: '. header header header .'
+                         '. . date . .'
+                         '. headline headline headline .'
+                         '. pic pic pic .'
+                         '. text text text .'
+                         '. text2 text2 text2 .'
+    }
+
 }
