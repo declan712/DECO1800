@@ -38,19 +38,6 @@ function iterateResults(data) {
 		}
 
     });
-    $("#record-count strong").text($(".record:visible").length);
-	$("#filter-text").keyup(function() {
-	
-		var searchTerm = $(this).val();
-		console.log(searchTerm);
-	
-		$(".record").hide();
-		$(".record:contains('" + searchTerm + "')").show();
-		$(".record-template").hide();
-	
-		$("#record-count strong").text($(".record:visible").length);
-	
-	});
 	setTimeout(function() {
 		$("#loading").addClass("loaded");
 	}, 500); // 0.5 second delay
@@ -105,6 +92,7 @@ function searchData(query) {
 function queryData(query) {
     $("#records").html("");
     $("#loading").removeClass("loaded");
+    var imagedata = imageQuery(query);
     var resource_id = 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040'
     var data = {
         resource_id: 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040', // the resource id
@@ -112,7 +100,7 @@ function queryData(query) {
         q: query // query for 'X'
       };
       $.ajax({
-        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM \"'+resource_id+'\" WHERE \"Name\" LIKE \'%'+query+'%\' OR \"Position\" LIKE \'%'+query+'%\' OR \"Remuneration\" LIKE \'%'+query+'%\' OR \"Remarks\" LIKE \'%'+query+'%\' OR \"Branch\" LIKE \'%'+query+'%\'',
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM \"'+resource_id+'\" WHERE \"Position\" LIKE \'%'+query+'%\' LIMIT 1',
         // data: data,
         //dataType: 'jsonp',
         cache: true,
@@ -123,4 +111,16 @@ function queryData(query) {
             iterateResults(data);
         }
       });
+};
+
+function imageQuery(query) {
+    $.ajax({
+        url: "https://pixabay.com/api/?key={ KEY }&q="+query+"&image_type=photo&safesearch=true",
+        dataType: "jsonp",
+        cache: true,
+        success: function(results) {
+            //do a thing here
+            console.log(results)
+        }
+    });
 };

@@ -9,16 +9,7 @@
 </head>
 
 <body class="loaded">
-    <nav>
-        <ul>
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li>
-                <a href="news.html">Page2</a>
-            </li>
-        </ul>
-    </nav>
+    <?php include 'header.php'?>
     <section>
         train goes toot toot
         <form id="search">
@@ -44,9 +35,7 @@
 			</section>
 		</article>
 
-    <footer>
-        SLQ - UQ - BIG BRAIN
-    </footer>
+    <?php include 'footer.php' ?>
 </body>
 
 

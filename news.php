@@ -9,16 +9,7 @@
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li>
-                <a href="news.html">Page2</a>
-            </li>
-        </ul>
-    </nav>
+    <?php include 'header.php' ?>
     <div id="loading" class="loaded"></div>
     <section id="records"></section>
     <section id="paper">
@@ -58,10 +49,7 @@
                 <p class="remarks">Remarks</p>
 			</section>
 		</article>
-
-    <footer>
-        SLQ - UQ - BIG BRAIN
-    </footer>
+    <?php include 'footer.php' ?>
 </body>
 
 
