@@ -66,9 +66,16 @@ footer > ul {
     align-content: center;
     list-style: none;
 }
+footer li {
+    display: flex;
+}
+footer li a {
+    display: flex;
+}
 footer > ul img {
+    margin:auto;
     max-width: 200px;
-    max-height: 200px;
+    max-height: 80px;
 }
 #records {
     display:flex;
@@ -93,6 +100,28 @@ footer > ul img {
     flex-direction: column;
     align-items: flex-start;
 }
+.record img {
+    min-height: 100px;
+    max-height: 300px;
+    min-width: 100px;
+    max-width: 100%;
+}
+.listItem-temp {
+    display:none;
+}
+#jobs ul {
+    display:flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+#jobs li {
+    padding:0.2em 0.5em;
+    margin: 0.1em 0.2em;
+    border:1px solid #222222;
+    background: linear-gradient(to top, #AAAAAA, #BBBBBB, #EEEEEE);
+    border-radius: 5px;
+}
+
 #loading {
     /* background: radial-gradient(white 10%, transparent 10%), linear-gradient(transparent 40%, #222222 40%, #222222 60%, transparent 60%), linear-gradient(90deg, transparent 40%, #222222 40%, #222222 60%, transparent 60%); */
    
