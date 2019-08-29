@@ -1,0 +1,174 @@
+[28-Aug-2019 00:50:07 Australia/Sydney] PHP Warning:  include(footer.php): failed to open stream: No such file or directory in /home/ic5c/public_html/news.php on line 52
+[28-Aug-2019 00:50:07 Australia/Sydney] PHP Warning:  include(footer.php): failed to open stream: No such file or directory in /home/ic5c/public_html/news.php on line 52
+[28-Aug-2019 00:50:07 Australia/Sydney] PHP Warning:  include(): Failed opening 'footer.php' for inclusion (include_path='.:/opt/alt/php70/usr/share/pear') in /home/ic5c/public_html/news.php on line 52
+[29-Aug-2019 12:32:30 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:30 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:30 Australia/Sydney] PHP Warning:  include(): Failed opening 'playernav.php' for inclusion (include_path='.:/opt/alt/php70/usr/share/pear') in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:36 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:36 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:36 Australia/Sydney] PHP Warning:  include(): Failed opening 'playernav.php' for inclusion (include_path='.:/opt/alt/php70/usr/share/pear') in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:40 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:40 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:32:40 Australia/Sydney] PHP Warning:  include(): Failed opening 'playernav.php' for inclusion (include_path='.:/opt/alt/php70/usr/share/pear') in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:35:06 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:35:06 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:35:06 Australia/Sydney] PHP Warning:  include(): Failed opening 'playernav.php' for inclusion (include_path='.:/opt/alt/php70/usr/share/pear') in /home/ic5c/public_html/player.php on line 14
+[29-Aug-2019 12:35:14 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/alerts.php on line 14
+[29-Aug-2019 12:35:14 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/alerts.php on line 14
+[29-Aug-2019 12:35:14 Australia/Sydney] PHP Warning:  include(): Failed opening 'playernav.php' for inclusion (include_path='.:/opt/alt/php70/usr/share/pear') in /home/ic5c/public_html/alerts.php on line 14
+[29-Aug-2019 12:35:19 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/projects.php on line 14
+[29-Aug-2019 12:35:19 Australia/Sydney] PHP Warning:  include(playernav.php): failed to open stream: No such file or directory in /home/ic5c/public_html/projects.php on line 14
+[29-Aug-2019 12:35:19 Australia/Sydney] PHP Warning:  include(): Failed opening 'playernav.php' for inclusion (include_path='.:/opt/alt/php70/usr/share/pear') in /home/ic5c/public_html/projects.php on line 14
+[29-Aug-2019 14:57:51 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 28
+[29-Aug-2019 14:57:51 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 14:58:31 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 28
+[29-Aug-2019 14:58:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 14:58:33 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 28
+[29-Aug-2019 14:58:33 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 14:58:50 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 28
+[29-Aug-2019 14:58:50 Australia/Sydney] PHP Notice:  Undefined variable: conn in /home/ic5c/public_html/player.php on line 31
+[29-Aug-2019 14:58:50 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_errors() in /home/ic5c/public_html/player.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 35
+[29-Aug-2019 14:59:13 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 28
+[29-Aug-2019 14:59:13 Australia/Sydney] PHP Notice:  Undefined variable: conn in /home/ic5c/public_html/player.php on line 31
+[29-Aug-2019 14:59:13 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_errors() in /home/ic5c/public_html/player.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 35
+[29-Aug-2019 14:59:24 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 28
+[29-Aug-2019 14:59:24 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 14:59:55 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 28
+[29-Aug-2019 14:59:55 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:29
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:01:35 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:01:35 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:04:09 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:04:09 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:04:39 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:04:39 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:05:40 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:05:40 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:05:42 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:05:42 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:06:24 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:06:24 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:06:26 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:06:26 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:12:48 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:12:48 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:18:19 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:18:19 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:22:36 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:22:36 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:22:48 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:22:48 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:25:26 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:25:26 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:25:28 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:25:28 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:26:53 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:26:53 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:30:56 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:30:56 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:30:57 Australia/Sydney] PHP Notice:  Undefined variable: Ua8xT in /home/ic5c/public_html/player.php on line 29
+[29-Aug-2019 15:30:57 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:31:18 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:31:20 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:31:29 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:32:00 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:33:31 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:33:32 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:33:45 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:34:28 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30
+[29-Aug-2019 15:40:39 Australia/Sydney] PHP Fatal error:  Uncaught Error: Call to undefined function sqlsrv_connect() in /home/ic5c/public_html/player.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/ic5c/public_html/player.php on line 30

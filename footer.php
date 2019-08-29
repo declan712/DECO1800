@@ -1,4 +1,5 @@
 <footer>
+    <input type="button" id="clearStorage" value="Clear Local Storage">
     <ul>
         <li>
             <a href="#">
