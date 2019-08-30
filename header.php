@@ -1,7 +1,7 @@
 
-<nav id="main-nav">
+<nav id="main-nav"class="nav-down">
     <h1> 1890's Queensland Rail Tycoon</h1>
-        <ul>
+        <ul class="collapsed">
             <li>
                 <a href="index.php">Home</a>
             </li>

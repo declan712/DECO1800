@@ -2,7 +2,7 @@
 <nav id="player-nav">
         <ul>
             <li>
-                <a href="player.php">Home</a>
+                <a href="player.php">Player</a>
             </li>
             <li>
                 <a href="projects.php">Projects</a>
