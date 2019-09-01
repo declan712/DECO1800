@@ -1,9 +1,14 @@
+
 * {
     box-sizing: border-box;
     padding:0;
     margin:0;
     color: #DDDDDD;
 }
+
+/*------------------------------------------------------------*/
+/*                          NAV                               */
+/*------------------------------------------------------------*/
 
 nav {
     display: flex;
@@ -45,6 +50,12 @@ nav a:hover {
 #player-nav + section {
     margin-top: 3em;
 }
+
+
+/*------------------------------------------------------------*/
+/*                          BODY                              */
+/*------------------------------------------------------------*/
+
 body {
     position: relative;
     display:flex;
@@ -63,6 +74,11 @@ body > section {
     /* background-color: #AAAAAA; */
 
 }
+
+
+/*------------------------------------------------------------*/
+/*                        FOOTER                              */
+/*------------------------------------------------------------*/
 
 footer {
     background-color: #1f1f1f;
@@ -89,6 +105,11 @@ footer > ul img {
     max-width: 200px;
     max-height: 80px;
 }
+
+/*------------------------------------------------------------*/
+/*                        RECORDS                             */
+/*------------------------------------------------------------*/
+
 #records {
     display:flex;
     flex-wrap: wrap;
@@ -166,6 +187,72 @@ footer > ul img {
     }
 }
 
+
+/*------------------------------------------------------------*/
+/*                      GAME SCREEN                           */
+/*------------------------------------------------------------*/
+
+#game-screen {
+    display:grid;
+    width:100%;
+    height: 80vh;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: 'players game alerts'
+                         'players game projects';
+}
+#game-players {
+    grid-area: players;
+    background-color: #444444;
+}
+#game-players .player {
+    padding:1em;
+    margin:0.2em;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #DD7700, #AA22AA);
+}
+.player-template {
+    display:none;
+}
+#game-map {
+    grid-area: game;
+    background-color: #222222;
+    background: urL(https://www.qhatlas.com.au/sites/default/files/imagecache/Large/QSA%20Item%20ID%20634523%20Cyclists%20road%20map%20of%20Brisbane%20and%20surrounds.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#game-alerts {
+    grid-area: alerts;
+    background-color: #444444;
+}
+#game-alerts .alert {
+    padding:1em;
+    margin:0.2em;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #DD7700, #AA22AA);
+}
+.alert-template {
+    /* display:none; */
+}
+#game-projects {
+    grid-area: projects;
+    background-color: #444444;
+}
+#game-projects .project {
+    padding:1em;
+    margin:0.2em;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #DD7700, #AA22AA);
+}
+.project-template {
+    /* display:none; */
+}
+
+/*------------------------------------------------------------*/
+/*                        NEWSPAPER                           */
+/*------------------------------------------------------------*/
+
 #paper {
     background: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260);
     background-repeat: no-repeat;
@@ -224,6 +311,9 @@ footer > ul img {
 #article-text-additional {
     grid-area: text2;
 }
+
+
+
 input[type="button"] {
     padding: 0.2em;
     background-color: #333333;
@@ -236,6 +326,10 @@ input[type="text"] {
     border: 1px solid #555555;
     border-radius: 3px;
 }
+
+/*------------------------------------------------------------*/
+/*                         MOBILE                             */
+/*------------------------------------------------------------*/
 
 @media screen and (max-width: 1080px) {
     * {
@@ -290,6 +384,14 @@ input[type="text"] {
                          '. pic pic pic .'
                          '. text text text .'
                          '. text2 text2 text2 .'
+    }
+    #game-screen {
+        height: auto;
+        grid-template-rows: auto 50vh auto;
+        grid-template-columns: 50% 50%;
+        grid-template-areas: 'players players'
+                             'game game'
+                             'alerts projects';
     }
 
 }

@@ -6,13 +6,16 @@
                 <a href="index.php">Home</a>
             </li>
             <li>
-                <a href="news.php">Page2</a>
+                <a href="news.php">Newspaper</a>
             </li>
             <li>
                 <a href="employee.php">Employees</a>
             </li>
             <li>
                 <a href="player.php">Player Screen</a>
+            </li>
+            <li>
+                <a href="gamescreen.php">Game Screen</a>
             </li>
         </ul>
     </nav>

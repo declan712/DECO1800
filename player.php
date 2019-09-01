@@ -23,28 +23,6 @@
         <h1>Projects:</h1>
     </section>
     
-<section>
-<?php
-$serverName = "localhost"; //serverName\instanceName
-$username = "ic5c_player";
-$password = "verysecure1";
-$dbname = "ic5c_gameSettings";
-$conn = new mysqli( $serverName, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " .$conn->connect_error);
-} else {
-    echo("Connection established");
-}
-?>
-</section>
-
-    <section>
-        <form id="search">
-            <input type="text" name="searchbar" id="searchbar" placeholder="Employee Profession">
-        </form>
-    </section>
-    <div id="loading" class="loaded"></div>
     <section id="records"></section>
 
     <article class="record record-template">
