@@ -11,6 +11,30 @@ if ($conn->connect_error) {
     //echo("Connection established");
     checkReq();
 }
+function getProjectData($pID) {
+    global $conn;
+    $sql = "SELECT * FROM `gameProject` WHERE `projectID` = '".$pID."' LIMIT 1";
+    $projectData = $conn->query($sql);
+    if ($projectData->num_rows > 0) {
+        $row = $projectData->fetch_assoc();
+        echo($pID.",".$row["projectName"].",".$row["projectCost"].",".$row["projectComplete"].",".$row["empRequired"].",".$row["projectPlayer"]);
+    } else {
+        echo("ERROR: Project not found.");
+    }
+}
+
+function getAllProjectData() {
+    global $conn;
+    $sql = "SELECT * FROM `gameProject` WHERE `projectComplete` = 'NONE'";
+    $playerData = $conn->query($sql);
+    if ($playerData->num_rows > 0) {
+        while($row = $playerData->fetch_assoc()) {
+            echo($row["projectID"].",".$row["projectName"].",".$row["projectCost"].",".$row["empRequired"].";");
+        }
+    } else {
+        echo("ERROR: No Projects Found");
+    }
+}
 
 function getPlayerData($uID) {
     global $conn;
@@ -40,12 +64,19 @@ function getAllPLayerData() {
 }
 
 function checkReq() {
-    if ($_GET["action"]="getPlayer" && isset($_GET["uID"])) {
+    if ($_GET["action"]=="getPlayer" && isset($_GET["uID"])) {
         //echo("searching for player with id ".$_GET["uID"]."<br>");
         getPlayerData($_GET["uID"]);
     }
-    else if ($_GET["action"]="getAllPlayers") {
+    else if ($_GET["action"]=="getAllPlayers") {
         getAllPlayerData();
+    }
+    else if ($_GET["action"]=="getProj" && isset($_GET["pID"])) {
+        getProjectData($_GET["pID"]);
+    }else if ($_GET["action"]=="getAllProjects") {
+        getAllProjectData();
+    } else {
+        echo "Invalid";
     }
 }
 

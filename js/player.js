@@ -30,6 +30,7 @@ function checkUID() {
     //playerName=localStorage.getItem("uname");
 }
 function getPlayer() {
+    uID = localStorage.getItem("uID");
     $.ajax({
         url: "database.php?action=getPlayer&uID="+uID,
         //dataType: "json",

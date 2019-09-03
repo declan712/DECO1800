@@ -193,6 +193,7 @@ footer > ul img {
 /*------------------------------------------------------------*/
 
 #game-screen {
+    position: relative;
     display:grid;
     width:100%;
     height: 80vh;
@@ -200,6 +201,23 @@ footer > ul img {
     grid-template-rows: 50% 50%;
     grid-template-areas: 'players game alerts'
                          'players game projects';
+}
+#lightbox {
+    display:none;
+    position: absolute;
+    top: 10%;
+    left:10%;
+    width:80%;
+    height:80%;
+    background-color: #666666CC;
+}
+#lightbox input[type="button"].close-preview {
+    position: absolute;
+    right:-1em;
+    top:-1em;
+    width: 3em;
+    height: 3em;
+    border-radius:1.5em;
 }
 #game-players {
     grid-area: players;
@@ -213,6 +231,12 @@ footer > ul img {
 }
 .player-template {
     display:none;
+}
+.project-template {
+    display:none;
+}
+.alert-template {
+    /* display:none; */
 }
 #game-map {
     grid-area: game;
@@ -245,10 +269,12 @@ footer > ul img {
     border-radius: 20px;
     background: linear-gradient(135deg, #DD7700, #AA22AA);
 }
-.project-template {
-    /* display:none; */
+input[type="button"].more-info {
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    float: right;
 }
-
 /*------------------------------------------------------------*/
 /*                        NEWSPAPER                           */
 /*------------------------------------------------------------*/

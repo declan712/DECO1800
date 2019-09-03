@@ -21,20 +21,23 @@
             </article>
         </section>
         <section id="game-map">
-        heres a map
         </section>
         <section id="game-projects">
-            <article class="project-template project">
+            <article class="project-template">
+                <input type="button" value="i" class="more-info">
                 <h2 class="project-name">project name</h2>
-                <p class="project-text">example project text</p>
+                <p class="project-cost">example project cost</p>
+                <p class="project-emp">example project employee</p>
+                
             </article>
         </section>
         <section id="game-alerts">
-            <article class="alert-template alert">
+            <article class="alert-template">
                 <h2 class="alert-name">alert name</h2>
                 <p class="alert-text">example alert text</p>
             </article>
         </section>
+        <aside id="lightbox"></aside>
     </section>
     
     
