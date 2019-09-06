@@ -20,11 +20,10 @@ function updatePlayer() {
     setTimeout(updatePlayer, 2000);
 }
 function checkUID() {
-    uID = localStorage.getItem("uID");
-    if (!uID) {
+    if (!(uID=localStorage.getItem("uID"))) {
         console.log("No user ID found");
-        localStorage.setItem("uID", "999999999");
-        console.log("setting uID to 999999999");
+        localStorage.setItem("uID", "1");
+        console.log("setting uID to 1");
         uID = localStorage.getItem("uID");
     }
     //playerName=localStorage.getItem("uname");
@@ -32,7 +31,7 @@ function checkUID() {
 function getPlayer() {
     uID = localStorage.getItem("uID");
     $.ajax({
-        url: "database.php?action=getPlayer&uID="+uID,
+        url: "../database.php?action=getPlayer&uID="+uID,
         //dataType: "json",
         success: function(results) {
             console.log(results);

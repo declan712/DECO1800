@@ -3,35 +3,31 @@
 <head>
     <meta charset="utf-8">
     <title>I like Trains</title>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="../js/employee.js"></script>
+    <script src="../js/script.js"></script>
 </head>
 
 <body class="loaded">
-    <nav>
-        <ul>
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li>
-                <a href="news.html">Page2</a>
-            </li>
-        </ul>
-    </nav>
+    <?php include '../header.php'?>
     <section>
         train goes toot toot
         <form id="search">
-            <input type="text" name="searchbar" id="searchbar" placeholder="Search Database">
-            <input type="button" value="Search" id="search-button">
+            <input type="text" name="searchbar" id="searchbar" placeholder="Employee Profession">
         </form>
-        <form id="filter">
-			<input id="filter-text" type="text" placeholder="Filter by Record Text" value="">
-		</form>
-		<p id="record-count"><strong>0</strong> Records Displayed</p>
     </section>
     <div id="loading" class="loaded"></div>
     <section id="records"></section>
+
+    <section id="jobs">
+        <h1>Possible Jobs</h1>
+        <ul id="joblist">
+            <li class="listItem-temp">
+                <p class="position">record text</p>
+            </li>
+        </ul>
+    </section>
 
     <article class="record record-template">
 			<h2>Name</h2>
@@ -41,12 +37,11 @@
                 <p class="position">Postition</p>
                 <p class="pay">Renumeration</p>
                 <p class="remarks">Remarks</p>
-			</section>
+            </section>
+            <img src="images/placeholder.jpg">
 		</article>
 
-    <footer>
-        SLQ - UQ - BIG BRAIN
-    </footer>
+    <?php include '../footer.php' ?>
 </body>
 
 

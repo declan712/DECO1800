@@ -65,7 +65,7 @@ function iterateProjects(data) {
 function getPlayers() {
     
     $.ajax({
-        url: "database.php?action=getAllPlayers",
+        url: "../database.php?action=getAllPlayers",
         //dataType: "json",
         success: function(results) {
             // console.log(results);
@@ -77,7 +77,7 @@ function getPlayers() {
 function getProjects() {
     
     $.ajax({
-        url: "database.php?action=getAllProjects",
+        url: "../database.php?action=getAllProjects",
         //dataType: "json",
         success: function(results) {
             // console.log(results);
@@ -95,7 +95,7 @@ function displayProjectLightbox(data) {
 
 function showProjectDetails(pID) {
     $.ajax({
-        url: "database.php?action=getProj&pID="+pID,
+        url: "../database.php?action=getProj&pID="+pID,
         //dataType: "json",
         success: function(results) {
             console.log(results);

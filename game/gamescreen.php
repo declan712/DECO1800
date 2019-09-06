@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Game Screen</title>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/game.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/game.js"></script>
 </head>
 
 <body>
-    <?php include 'header.php'?>
+    <?php include '../header.php'?>
 
     <section id="game-screen">
         <section id="game-players">
@@ -42,7 +42,7 @@
     
     
 
-    <?php include 'footer.php' ?>
+    <?php include '../footer.php' ?>
 </body>
 
 

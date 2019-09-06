@@ -113,9 +113,9 @@ function queryData(query) {
         q: query // query for 'X'
       };
       $.ajax({
-        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM \"'+resource_id+'\" WHERE \"Name\" LIKE \'%'+query+'%\' OR \"Position\" LIKE \'%'+query+'%\' OR \"Remuneration\" LIKE \'%'+query+'%\' OR \"Remarks\" LIKE \'%'+query+'%\' OR \"Branch\" LIKE \'%'+query+'%\'',
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM %22'+resource_id+'%22 WHERE %22Name%22 LIKE %27%25'+query+'%25%27 OR %22Position%22 LIKE %27%25'+query+'%25%27 OR %22Remuneration%22 LIKE %27%25'+query+'%25%27 OR %22Remarks%22 LIKE %27%25'+query+'%25%27 OR %22Branch%22 LIKE %27%25'+query+'%25%27',
         // data: data,
-        //dataType: 'jsonp',
+        dataType: 'jsonp',
         cache: true,
         success: function(data) {
         //   alert('Total results found: ' + data.result.total)

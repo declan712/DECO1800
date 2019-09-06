@@ -11,7 +11,7 @@ function updateProject(data) {
 
 function getProject(pID) {
     $.ajax({
-        url: "database.php?action=getProj&pID="+pID,
+        url: "../database.php?action=getProj&pID="+pID,
         //dataType: "json",
         success: function(results) {
             console.log(results);

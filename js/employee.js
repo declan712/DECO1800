@@ -106,12 +106,13 @@ function queryData(query) {
         q: query // query for 'X'
       };
       $.ajax({
-        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM \"'+resource_id+'\" WHERE \"Position\" LIKE \'%'+query+'%\' LIMIT 1',
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM %22'+resource_id+'%22 WHERE %22Position%22 LIKE %27%25'+query+'%25%27 LIMIT 1',
         // data: data,
-        //dataType: 'jsonp',
+        dataType: 'jsonp',
         cache: true,
         success: function(data) {
             imageQuery(query,data);
+            // generateUser(query,data);
             //iterateResults(data,imageData);
         }
       });
@@ -119,7 +120,7 @@ function queryData(query) {
 
 function imageQuery(query,data) {
     $.ajax({
-        url: "https://pixabay.com/api/?key=7227013-50ebabaacc01b845a5e54e34b&q="+query+"&image_type=photo&safesearch=true",
+        url: "https://pixabay.com/api/?key=7227013-50ebabaacc01b845a5e54e34b&q="+query+"&image_type=photo&safesearch=true&category=people",
         dataType: "jsonp",
         cache: true,
         success: function(results) {
@@ -132,6 +133,18 @@ function imageQuery(query,data) {
     });
 };
 
+// function generateUser(gender,empData) {
+//     $.ajax({
+//         url: 'https://randomuser.me/api/?gender=male',
+//         dataType: 'json',
+//         success: function(data) {
+//           console.log(data);
+//           imageData = data.results[0].picture.large;
+//           iterateResults(empData,imageData);
+//         }
+//       });
+// }
+
 function showProfessions() {
     var resource_id = 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040'
     var data = {
@@ -139,9 +152,9 @@ function showProfessions() {
         limit: 100, // get 5 results
       };
       $.ajax({
-        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT DISTINCT \"Position\" FROM \"'+resource_id+'\" ',
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT DISTINCT %22Position%22 FROM %22'+resource_id+'%22 ',
         data: data,
-        //dataType: 'jsonp',
+        dataType: 'jsonp',
         cache: true,
         success: function(data) {
             iterateJobs(data);

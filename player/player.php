@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Player Screen</title>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/player.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/player.js"></script>
 </head>
 
 <body class="loaded">
-    <?php include 'header.php'?>
+    <?php include '../header.php'?>
     <?php include 'playernav.php'?>
     <section>
         <h2>Money: <span id="funds">00.00</span></h2>
@@ -37,7 +37,7 @@
             <img src="images/placeholder.jpg">
 		</article>
 
-    <?php include 'footer.php' ?>
+    <?php include '../footer.php' ?>
 </body>
 
 

@@ -3,22 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>example newspaper</title>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/script1.js"></script>
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li>
-                <a href="news.html">Page2</a>
-            </li>
-        </ul>
-    </nav>
+    <?php include '../header.php' ?>
     <div id="loading" class="loaded"></div>
     <section id="records"></section>
     <section id="paper">
@@ -58,10 +50,7 @@
                 <p class="remarks">Remarks</p>
 			</section>
 		</article>
-
-    <footer>
-        SLQ - UQ - BIG BRAIN
-    </footer>
+    <?php include '../footer.php' ?>
 </body>
 
 
