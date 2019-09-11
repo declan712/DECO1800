@@ -9,32 +9,13 @@
     <script src="js/script1.js"></script>
 </head>
 
-<body class="loaded">
+<body>
     <?php include 'header.php'?>
-    <section>
-        train goes toot toot
-        <form id="search">
-            <input type="text" name="searchbar" id="searchbar" placeholder="Search Database">
-            <input type="button" value="Search" id="search-button">
-        </form>
-        <form id="filter">
-			<input id="filter-text" type="text" placeholder="Filter by Record Text" value="">
-		</form>
-		<p id="record-count"><strong>0</strong> Records Displayed</p>
-    </section>
-    <div id="loading" class="loaded"></div>
-    <section id="records"></section>
 
-    <article class="record record-template">
-			<h2>Name</h2>
-			<p class="year">Record Year</p>
-			<section class="record-content">
-                <p class="branch">Branch</p>
-                <p class="position">Postition</p>
-                <p class="pay">Renumeration</p>
-                <p class="remarks">Remarks</p>
-			</section>
-		</article>
+    <section id="welcome-screen">
+        <img src="https://images.pexels.com/photos/533608/pexels-photo-533608.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260">
+        <a href="/trains/player/player-join.php"><input type="button" value="Join Game"></a>
+    </section>
 
     <?php include 'footer.php' ?>
 </body>

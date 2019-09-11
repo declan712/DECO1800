@@ -63,6 +63,22 @@ function getAllPLayerData() {
     }
 }
 
+function createUser($name) {
+    global $conn;
+    $sql = "INSERT INTO `userCreated` (userName) VALUES ('".$name."')";
+    $q1 = $conn->query($sql);
+    sleep(2);
+    $sql = "SELECT * FROM `userCreated` WHERE `userName` LIKE '".$name."' LIMIT 1";
+    //echo("query: ".$sql);
+    $userData = $conn->query($sql);
+    if ($userData->num_rows > 0) {
+       $row = $userData->fetch_assoc();
+       echo($row["userID"].",".$row["userName"].",".$row["projectMoney"]);
+    } else {
+        echo("Error: unable to create user");
+    }
+}
+
 function checkReq() {
     if ($_GET["action"]=="getPlayer" && isset($_GET["uID"])) {
         //echo("searching for player with id ".$_GET["uID"]."<br>");
@@ -75,6 +91,8 @@ function checkReq() {
         getProjectData($_GET["pID"]);
     }else if ($_GET["action"]=="getAllProjects") {
         getAllProjectData();
+    } else if($_GET["action"]=="createNewPlayer" && isset($_GET["name"])) {
+        createUser($_GET["name"]);
     } else {
         echo "Invalid";
     }

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Game Screen</title>
     <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/game.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/game.js"></script>
@@ -13,6 +14,7 @@
     <?php include '../header.php'?>
 
     <section id="game-screen">
+        <p id="game-time">TIME</p>
         <section id="game-players">
             <h1>Players</h1>
             <article class="player-template">

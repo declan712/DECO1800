@@ -1,0 +1,87 @@
+/*------------------------------------------------------------*/
+/*                      GAME SCREEN                           */
+/*------------------------------------------------------------*/
+
+#game-screen {
+    position: relative;
+    display:grid;
+    width:100%;
+    height: 80vh;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: 'players game alerts'
+                         'players game projects';
+}
+#lightbox {
+    display:none;
+    position: absolute;
+    top: 10%;
+    left:10%;
+    width:80%;
+    height:80%;
+    background-color: #666666CC;
+}
+#lightbox input[type="button"].close-preview {
+    position: absolute;
+    right:-1em;
+    top:-1em;
+    width: 3em;
+    height: 3em;
+    border-radius:1.5em;
+}
+#game-players {
+    grid-area: players;
+    background-color: #444444;
+}
+#game-players .player {
+    padding:1em;
+    margin:0.2em;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #DD7700, #AA22AA);
+}
+.player-template {
+    display:none;
+}
+.project-template {
+    display:none;
+}
+.alert-template {
+    /* display:none; */
+}
+#game-map {
+    grid-area: game;
+    background-color: #222222;
+    background: urL(https://www.qhatlas.com.au/sites/default/files/imagecache/Large/QSA%20Item%20ID%20634523%20Cyclists%20road%20map%20of%20Brisbane%20and%20surrounds.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#game-alerts {
+    grid-area: alerts;
+    background-color: #444444;
+}
+#game-alerts .alert {
+    padding:1em;
+    margin:0.2em;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #DD7700, #AA22AA);
+}
+.alert-template {
+    /* display:none; */
+}
+#game-projects {
+    grid-area: projects;
+    background-color: #444444;
+}
+#game-projects .project {
+    padding:1em;
+    margin:0.2em;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #DD7700, #AA22AA);
+}
+input[type="button"].more-info {
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    float: right;
+}
