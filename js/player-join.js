@@ -1,3 +1,5 @@
+var playerName="";
+
 function createNewUser(userName) {
     $.ajax({
         url: "../database.php?action=createNewPlayer&name="+userName,
@@ -16,10 +18,14 @@ function checkUID() {
     if (!(uID=localStorage.getItem("uID"))) {
         console.log("No user ID found");
         // createNewUser();
+        $("#player-join").show();
         
     } else {
-        $("#player-join").hide();
-        $("#player-next").show();
+        //getPlayer();
+        if(playerName) {
+            $("#player-join").hide();
+            $("#player-next").show();
+        } else localStorage.setItem("uID","");
     }
     //playerName=localStorage.getItem("uname");
 }
@@ -30,9 +36,13 @@ function getPlayer() {
         //dataType: "json",
         success: function(results) {
             console.log(results);
-            var playerData = results.split(",");
-            playerName = playerData[1];
-            playerFunds = playerData[2];
+            if (results.includes("ERROR")){
+                localStorage.setItem("uID","");
+            } else {
+                var playerData = results.split(",");
+                playerName = playerData[1];
+            }
+            //playerFunds = playerData[2];
         }
     });
 }
@@ -40,7 +50,9 @@ function getPlayer() {
 
 $(document).ready(function() {
     $("#player-next").hide();
-    checkUID();
+    $("#player-join").hide();
+    getPlayer();
+    setTimeout(checkUID,1000);
     // updatePlayer();
 
     $("#clearStorage").click(function(event) {

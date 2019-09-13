@@ -8,7 +8,7 @@ if ( strtok($activePath, "/") =="trains" && strtok("/")=="player") {
 
 ?>
 <nav id="main-nav"class="nav-down">
-    <h1> 1890's Queensland Rail Tycoon</h1>
+    <h1><span id="burger-icon">&#9776</span> 1890's Queensland Rail Tycoon</h1>
         <ul class="collapsed">
             <li <?php echo ($activePage == 'index' ? ' class="active"' : ''); ?>>
                 <a href="http://5c.interaction.courses/trains/">Home</a>

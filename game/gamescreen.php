@@ -43,7 +43,7 @@
     </section>
     
     
-
+    <input id="delete-players" type="button" value="Delete Players">
     <?php include '../footer.php' ?>
 </body>
 

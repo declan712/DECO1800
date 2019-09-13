@@ -21,6 +21,9 @@ nav {
     width:100%;
     color: #DDDDDD;
 }
+#burger-icon{
+    display:none;
+}
 .nav-up {
     top: -3em;
 }
@@ -299,11 +302,19 @@ input[type="text"] {
     }
     #main-nav h1 {
         font-size: 2em;
+        padding:0.5em;
+    }
+    #burger-icon {
+        display:inline-block;
     }
     #main-nav ul {
         flex-direction: column;
         transition: height 0.2s ease;
         height: auto;
+    }
+    #main-nav li.active {
+        border-top: none;
+        border-left: 10px solid #AA22AA;
     }
     #player-nav {
         flex-direction: column;
@@ -313,25 +324,26 @@ input[type="text"] {
         max-width:100%;
     }
     body {
-        padding: 5em 0 20em 0;
+        padding: 14em 0 25em 0;
     }
-    .nav-up {
-        top: -23em;
-    }
+    
     #main-nav ul.collapsed {
         height:0;
         overflow: hidden;
     }
     #player-nav {
-        top:2.6em;
+        top:5.2em;
         border-top: 1px solid #111111;
+    }
+    .nav-up {
+        top: -23em;
+    }
+    #player-nav.nav-up {
+        top: -23em;
     }
     #player-nav.collapsed {
         height:0;
         overflow: hidden;
-    }
-    #player-nav + section {
-        margin-top: 5em;
     }
     .record {
         width:100%;

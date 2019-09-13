@@ -1,0 +1,42 @@
+#lightbox {
+    display:none;
+    justify-content:center;
+    position: absolute;
+    top: 20%;
+    left:10%;
+    width:80%;
+    height:60%;
+    background-color: #666666CC;
+}
+#project-details {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size:2em;
+}
+#lightbox input[type="button"].close-preview {
+    position: absolute;
+    right:-1em;
+    top:-1em;
+    width: 3em;
+    height: 3em;
+    border-radius:1.5em;
+}
+.project-template {
+    display:none;
+}
+#projects {
+    width:95%;
+}
+#game-projects .project {
+    padding:1em;
+    margin:0.2em;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #DD7700, #AA22AA);
+}
+input[type="button"].more-info {
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    float: right;
+}

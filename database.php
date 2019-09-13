@@ -78,21 +78,26 @@ function createUser($name) {
         echo("Error: unable to create user");
     }
 }
+function deletePlayers() {
+    global $conn;
+    $sql = "DELETE FROM `userCreated` WHERE `userID` > '1'";
+    $result = $conn->query($sql);
+}
 
 function checkReq() {
     if ($_GET["action"]=="getPlayer" && isset($_GET["uID"])) {
         //echo("searching for player with id ".$_GET["uID"]."<br>");
         getPlayerData($_GET["uID"]);
-    }
-    else if ($_GET["action"]=="getAllPlayers") {
+    } else if ($_GET["action"]=="getAllPlayers") {
         getAllPlayerData();
-    }
-    else if ($_GET["action"]=="getProj" && isset($_GET["pID"])) {
+    } else if ($_GET["action"]=="getProj" && isset($_GET["pID"])) {
         getProjectData($_GET["pID"]);
-    }else if ($_GET["action"]=="getAllProjects") {
+    } else if ($_GET["action"]=="getAllProjects") {
         getAllProjectData();
     } else if($_GET["action"]=="createNewPlayer" && isset($_GET["name"])) {
         createUser($_GET["name"]);
+    } else if($_GET["action"]=="deleteAllPlayers"){
+        deletePlayers(); 
     } else {
         echo "Invalid";
     }

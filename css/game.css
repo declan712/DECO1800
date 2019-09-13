@@ -85,3 +85,13 @@ input[type="button"].more-info {
     border-radius: 1em;
     float: right;
 }
+@media screen and (max-width: 1080px) {
+    #game-screen {
+        height: auto;
+        grid-template-rows: auto 50vh auto;
+        grid-template-columns: 50% 50%;
+        grid-template-areas: 'players players'
+                             'game game'
+                             'alerts projects';
+    }
+}

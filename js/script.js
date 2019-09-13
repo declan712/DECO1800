@@ -39,11 +39,13 @@ function hasScrolled() {
     if (st > lastScrollTop && st > navbarHeight){
         // Scroll Down
         $('#main-nav').removeClass('nav-down').addClass('nav-up');
+        $('#player-nav').removeClass('nav-down').addClass('nav-up');
         $("#main-nav ul").addClass("collapsed");
     } else {
         // Scroll Up
         if(st + $(window).height() < $(document).height()) {
             $('#main-nav').removeClass('nav-up').addClass('nav-down');
+            $('#player-nav').removeClass('nav-up').addClass('nav-down');
         }
     }
     

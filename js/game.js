@@ -123,6 +123,14 @@ $(document).ready(function() {
     $(document).on('click',".close-preview",function() {
         $("#lightbox").css("display","none");
     });
+    $("#delete-players").click(function(event) {
+        $.ajax({
+            url: "../database.php?action=deleteAllPlayers",
+            //dataType: "json",
+            success: function(results) {
+            }
+        });
+    });
     // $(".project-template").click(function(event) {
     //     event.preventDefault();
         
