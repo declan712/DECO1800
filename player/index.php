@@ -20,9 +20,20 @@
     <section id="alerts">
         <h1>Alerts:</h1>
     </section> 
-    <section id="Projects">
+    <section id="projects">
         <h1>Projects:</h1>
+        <section id="game-projects">
+            <article class="project-template">
+                <input type="button" value="i" class="more-info">
+                <h2 class="project-name">project name</h2>
+                <p class="project-cost">example project cost</p>
+                <p class="project-emp">example project employee</p>
+                
+            </article>
+        </section>
     </section>
+
+    <img src="../images/Choo.png" id="player-train">
     
     <section id="records"></section>
 
@@ -37,6 +48,7 @@
             </section>
             <img src="images/placeholder.jpg">
 		</article>
+        <aside id="lightbox"></aside>
 
     <?php include '../footer.php' ?>
 </body>

@@ -40,3 +40,8 @@ input[type="button"].more-info {
     border-radius: 1em;
     float: right;
 }
+#player-train {
+    max-width:400px;
+    position: absolute;
+    bottom:10em;
+}

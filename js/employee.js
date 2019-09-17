@@ -106,7 +106,7 @@ function queryData(query) {
         q: query // query for 'X'
       };
       $.ajax({
-        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM %22'+resource_id+'%22 WHERE %22Position%22 LIKE %27%25'+query+'%25%27 LIMIT 1',
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM %22'+resource_id+'%22 WHERE %22Position%22 LIKE %27%25'+query+'%25%27 LIMIT 1 OFFSET 20',//OFFSET n to select nth row
         // data: data,
         dataType: 'jsonp',
         cache: true,

@@ -44,7 +44,9 @@ function getPlayerData($uID) {
         $row = $playerData->fetch_assoc();
         $playerName = $row["userName"];
         $playerMoney = $row["projectMoney"];
-        echo($uID.",".$playerName.",".$playerMoney);
+        $gameProgress = $row["gameProgress"];
+        $playerColour = $row["userColour"];
+        echo($uID.",".$playerName.",".$playerMoney.",".$playerColour.",".$gameProgress);
     } else {
         echo("ERROR: Player not found.");
     }
@@ -56,7 +58,7 @@ function getAllPLayerData() {
     $playerData = $conn->query($sql);
     if ($playerData->num_rows > 0) {
         while($row = $playerData->fetch_assoc()) {
-            echo($row["userID"].",".$row["userName"].",".$row["projectMoney"].";");
+            echo($row["userID"].",".$row["userName"].",".$row["projectMoney"].",".$row["gameProgress"].",".$row["userColour"].";");
         }
     } else {
         echo("ERROR: No Players Found");
@@ -78,6 +80,19 @@ function createUser($name) {
         echo("Error: unable to create user");
     }
 }
+
+function setPlayerPos($uID,$pos) {
+    global $conn;
+    $sql = "UPDATE `userCreated` SET `gameProgress` = '".$pos."' WHERE `userID` = '".$uID."'";
+    $result = $conn->query($sql);
+}
+
+function setPlayerColour($uID,$colour) {
+    global $conn;
+    $sql = "UPDATE `userCreated` SET `userColour` = '".$colour."' WHERE `userID` = '".$uID."'";
+    $result = $conn->query($sql);
+}
+
 function deletePlayers() {
     global $conn;
     $sql = "DELETE FROM `userCreated` WHERE `userID` > '1'";
@@ -86,10 +101,13 @@ function deletePlayers() {
 
 function checkReq() {
     if ($_GET["action"]=="getPlayer" && isset($_GET["uID"])) {
-        //echo("searching for player with id ".$_GET["uID"]."<br>");
         getPlayerData($_GET["uID"]);
     } else if ($_GET["action"]=="getAllPlayers") {
         getAllPlayerData();
+    } else if ($_GET["action"]=="movePlayer" && isset($_GET["uID"]) && isset($_GET["pos"])) {
+        setPlayerPos($_GET["uID"],$_GET["pos"]);
+    } else if ($_GET["action"]=="setPlayerColour" && isset($_GET["uID"]) && isset($_GET["colour"])) {
+        setPlayerColour($_GET["uID"],$_GET["colour"]);
     } else if ($_GET["action"]=="getProj" && isset($_GET["pID"])) {
         getProjectData($_GET["pID"]);
     } else if ($_GET["action"]=="getAllProjects") {
