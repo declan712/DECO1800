@@ -18,21 +18,12 @@
         <h2>Money: <span id="funds">00.00</span></h2>
         <h2 class="username">$USER</h2>
     </section>
-    <section id="alerts">
-        <h1>Alerts:</h1>
+    <section>
+        <p>
+            this is where we might show the employeees this player has hired
     </section> 
-    <section id="projects">
-        <h1>Projects:</h1>
-        <section id="game-projects">
-            <article class="project-template">
-                <input type="button" value="i" class="more-info">
-                <h2 class="project-name">project name</h2>
-                <p class="project-cost">example project cost</p>
-                <p class="project-emp">example project employee</p>
-                
-            </article>
-        </section>
-    </section>
+    
+
     <img src="../images/Choo.png" id="player-train">
     
     <section id="records"></section>

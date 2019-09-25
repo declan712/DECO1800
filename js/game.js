@@ -10,11 +10,12 @@ function iteratePlayers(data) {
         var playerMoney = player[2];
         var playerColour = player[4];
         var gameProgress = 1+parseInt(player[3]);
+        var playerIncome = player[5];
 
         if ( $("#player-"+playerID).length ) {
             $("#player-"+playerID).removeClass("old");
             $("#player-"+playerID+" .username").html(playerName);
-            $("#player-"+playerID+" .funds").html(playerMoney);
+            $("#player-"+playerID+" .funds").html(playerMoney+" (+"+playerIncome+")");
             $("#player-"+playerID+" .player-colour").css("background-color","#"+playerColour);
 
             var clonedPlayerPiece = $("#player-"+playerID+" .player-colour").clone();
@@ -27,7 +28,7 @@ function iteratePlayers(data) {
             clonedPlayerTemplate.appendTo("#game-players");
 
             $("#player-"+playerID+" .username").html(playerName);
-            $("#player-"+playerID+" .funds").html(playerMoney);
+            $("#player-"+playerID+" .funds").html(playerMoney+" (+"+playerIncome+")");
             $("#player-"+playerID+" .player-colour").css("background-color","#"+playerColour);
 
             var clonedPlayerPiece = $("#player-"+playerID+" .player-colour").clone();
@@ -68,13 +69,13 @@ function move(pData,dir) {
     pPos = parseInt(playerData[4]);
     if (dir=="forward" && playerData[4] < 15) {
         $.ajax({
-            url: "../database.php?action=movePlayer&uID="+playerData[0]+"&pos="+(pPos+1),
+            url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos+1),
             success: function(results) {
             }
         });
     } else if (dir=="back" && playerData[4] > 0) {
         $.ajax({
-            url: "../database.php?action=movePlayer&uID="+playerData[0]+"&pos="+(pPos-1),
+            url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos-1),
             success: function(results) {
             }
         });
@@ -91,23 +92,6 @@ function movePlayer(pID, dir) {
     });
 }
 
-// function updatePlayers() {
-//     getPlayer();
-//     var funds = toShillings(playerFunds);
-//     $("#funds").text("£"+funds[0]+(funds[1]>0?", "+funds[1]+" Shillings":"")+(funds[2]>0?", "+funds[2]+" Pence":""));
-//     $("#username").text(playerName);
-//     setTimeout(updatePlayer, 2000);
-// }
-// function checkUID() {
-//     uID = localStorage.getItem("uID");
-//     if (!uID) {
-//         console.log("No user ID found");
-//         localStorage.setItem("uID", "999999999");
-//         console.log("setting uID to 999999999");
-//         uID = localStorage.getItem("uID");
-//     }
-//     //playerName=localStorage.getItem("uname");
-// }
 function getPlayers() {
     
     $.ajax({
@@ -150,7 +134,7 @@ function showProjectDetails(pID) {
     });
 }
 
-function setPLayerColour(uID,R,G,B) {
+function setPlayerColour(uID,R,G,B) {
     var hexR=parseInt(R,10).toString(16);
     var hexG=parseInt(G,10).toString(16);
     var hexB=parseInt(B,10).toString(16);
@@ -158,7 +142,7 @@ function setPLayerColour(uID,R,G,B) {
     hexG = (hexG.length==1?"0"+hexG:hexG);
     hexB = (hexB.length==1?"0"+hexB:hexB);
     $.ajax({
-        url: "../database.php?action=setPlayerColour&uID="+uID+"&colour="+hexR+hexG+hexB,
+        url: "../database.php?action=setPlayerData&uID="+uID+"&col=userColour&val="+hexR+hexG+hexB,
         //dataType: "json",
         success: function(results) {
             console.log("set "+uID+" colour to #"+hexR+hexG+hexB);
@@ -180,11 +164,109 @@ function drawLines() {
             .attr('y2',pos2.top+25);
     }
 }
+function drawTime(time) {
+    var month = "";
+    switch(time%12) {
+        case 1:
+            month = "January";
+            break;
+        case 2:
+            month = "February";
+            break;
+        case 3:
+            month = "March";
+            break;
+        case 4:
+            month = "April";
+            break;
+        case 5:
+            month = "May";
+            break;
+        case 6:
+            month = "June";
+            break;
+        case 7:
+            month = "July";
+            break;
+        case 8:
+            month = "August";
+            break;
+        case 9:
+            month = "September";
+            break;
+        case 10:
+            month = "October";
+            break;
+        case 11:
+            month = "November";
+            break;
+        case 0:
+            month = "December";
+            break;
+        default:
+            month = "not good";
+    }
+    var year = Math.floor((time-1)/12) + 1890;
+    $("#game-time").text(month+" "+year);
+}
+
+function setPlayerFunds(playerID,money) {
+    $.ajax({
+        url: "../database.php?action=setPlayerData&uID="+playerID+"&col=projectMoney&val="+money,
+        success: function(result) {
+        }
+    });
+}
+
+function iteratePlayerIncome(players) {
+    var tempPlayers = players.split(";");
+    for (i=0;i<tempPlayers.length;i++) {
+        var player = tempPlayers[i].split(",");
+        var playerID = player[0];
+        var playerMoney = player[2];
+        var playerIncome = player[5];
+        var newMoney = (parseFloat(playerMoney) + parseFloat(playerIncome)).toFixed(2);
+        $("#player-"+playerID+" .funds").html(newMoney+" (+"+playerIncome+")");
+        setPlayerFunds(playerID,newMoney);
+    }
+}
+
+function givePlayersIncome() {
+    $.ajax({
+        url: "../database.php?action=getAllPlayers",
+        success: function(players) {
+            iteratePlayerIncome(players);
+        }
+    });
+}
+
+function advanceTime(time,gID) {
+    var newTime = time+1
+    $.ajax({
+        url: "../database.php?action=setGameTime&gID="+gID+"&time="+newTime,
+        success: function() {
+            drawTime(newTime);
+            givePlayersIncome();
+            setTimeout(updateTime,6000);
+        }
+    });
+}
+
+function updateTime() {
+    gID=1;
+    $.ajax({
+        url: "../database.php?action=getGameTime&gID="+gID,
+        success: function(time) {
+            advanceTime(parseInt(time),gID);
+        }
+    });
+}
 
 $(document).ready(function() {
     getPlayers();
     getProjects();
     drawLines();
+    updateTime();
     window.addEventListener("resize", drawLines);
     $("#clearStorage").click(function(event) {
         event.preventDefault();
@@ -207,6 +289,18 @@ $(document).ready(function() {
             }
         });
     });
+    $("#reset-time").click(function(event) {
+        $.ajax({
+            url: "../database.php?action=setGameTime&gID=1&time=0",
+            success: function(results) {
+            }
+        });
+        $.ajax({
+            url: "../database.php?action=resetMoney&gID=1",
+            success: function(results) {
+            }
+        });
+    });
     $(document).on('click',".back-forward input",function() {
         var ID = $(this).parent().parent().attr("id");
         var pID = ID.split("-")[1];
@@ -219,7 +313,7 @@ $(document).ready(function() {
         var R = $(this).parent().children("input:nth-of-type(1)").val();
         var G = $(this).parent().children("input:nth-of-type(2)").val();
         var B = $(this).parent().children("input:nth-of-type(3)").val();
-        setPLayerColour(pID,R,G,B);
+        setPlayerColour(pID,R,G,B);
     });
     // $(".project-template").click(function(event) {
     //     event.preventDefault();

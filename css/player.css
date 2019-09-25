@@ -1,12 +1,27 @@
-#lightbox {
+.lightbox {
     display:none;
     justify-content:center;
     position: absolute;
-    top: 20%;
-    left:10%;
-    width:80%;
-    height:60%;
+    top: 16%;
+    left:5%;
+    width:90%;
+    height:65%;
     background-color: #666666CC;
+}
+#instructions {
+    padding:2em;
+}
+#show-intro {
+    position: absolute;
+    right: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    border-radius: 100%;
+    background-color: green;
+    text-decoration: none;
 }
 #project-details {
     display:flex;
@@ -14,12 +29,12 @@
     justify-content: space-evenly;
     font-size:2em;
 }
-#lightbox input[type="button"].close-preview {
+.lightbox input[type="button"].close-preview {
     position: absolute;
-    right:-1em;
-    top:-1em;
-    width: 3em;
-    height: 3em;
+    right:-0.5em;
+    top:-0.5em;
+    width: 2em;
+    height: 2em;
     border-radius:1.5em;
 }
 .project-template {

@@ -75,20 +75,10 @@ function getProjects() {
     });
 }
 
-function displayProjectLightbox(template,data) {
+function displayProjectLightbox(data) {
     var lightbox = $("#lightbox");
     var projectData = data.split(",");
-    lightbox.html(template);
-    $("#lightbox .project-name").html(projectData[1]);
-    $("#lightbox .project-cost").html(projectData[2]);
-    $("#lightbox .project-status").html(projectData[3]);
-    $("#lightbox .project-required").html(projectData[4]);
-    $.ajax({
-        url: "../database.php?action=getEmployees&uID="+uID+"&empType="+projectData[4],
-        success: function(results) {
-            console.log(results)
-        }
-    });
+    lightbox.html("<input type=\"button\" value=\"X\" class=\"close-preview\"><section id=\"project-details\"> <p class=\"project-name\">"+projectData[1]+"</p> <p class=\"project-status\">"+projectData[3]+"</p> <p class=\"project-cost\">"+projectData[2]+"</p> <p class=\"project-required\">"+projectData[4]+"</p> <p class=\"project-player\">"+projectData[5]+"</p> </section> ");
     lightbox.css("display","flex");
 }
 
@@ -96,13 +86,9 @@ function showProjectDetails(pID) {
     $.ajax({
         url: "../database.php?action=getProj&pID="+pID,
         //dataType: "json",
-        success: function(data) {
-            $.ajax({
-                url: "../player/player-project.php",
-                success: function(template) {
-                    displayProjectLightbox(template,data);
-                }
-            });
+        success: function(results) {
+            console.log(results);
+            displayProjectLightbox(results);
         }
     });
 }
@@ -133,8 +119,4 @@ $(document).ready(function() {
         localStorage.setItem("intro","read");
         $("#instructions").css("display","none");
     });
-    $("#show-intro").click(function(event) {
-        event.preventDefault();
-        $("#instructions").css("display","flex");
-    })
 });

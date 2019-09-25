@@ -5,9 +5,10 @@
 #game-screen {
     position: relative;
     display:grid;
+    max-width:100%;
     width:100%;
     height: 80vh;
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 25% 50% 25%;
     grid-template-rows: 50% 50%;
     grid-template-areas: 'players game alerts'
                          'players game projects';
@@ -29,21 +30,30 @@
     height: 3em;
     border-radius:1.5em;
 }
+#game-time{
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+}
 #game-players {
     grid-area: players;
     background-color: #444444;
     overflow-y: scroll;
 }
 #game-players .player {
+    position: relative;
     padding:1em;
     margin:0.2em;
     border-radius: 20px;
     background: linear-gradient(135deg, #DD7700, #AA22AA);
 }
 #game-players .player .player-colour {
-    width:20px;
-    height:20px;
-    border: 2px solid black;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    width:50px;;
+    height:50px;
+    /* border: 3px solid black; */
     border-radius:100%;
 }
 .player-template {
@@ -98,9 +108,7 @@ input[type="button"].more-info {
     position: relative;
 }
 .station {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    text-align: center;
     width:50px;
     height:50px;
     border: 2px solid red;
@@ -180,10 +188,16 @@ input[type="button"].more-info {
     position: relative;
 }
 .player-piece {
-    border:2px solid black;
+    /* border:2px solid black; */
     border-radius: 100%;
-    width:20px;
-    height:20px;
+    width:50px;
+    height:50px;
+    margin-left:24px;
+    transform: translateX(-50%);
+}
+.choo {
+    border: 2px solid transparent;
+    width: 50px;
 }
 #game-map svg {
     height:100%;
@@ -194,46 +208,100 @@ input[type="button"].more-info {
     stroke-width:10px
 }
 #game-train {
-    max-width:200px;
+    max-width:100px;
     position: absolute;
     top:100%;
-    /* animation: toot-toot 4s infinite ease; */
+    transform: translate(-50%,-80%);
+    /* animation: toot-toot 10s infinite ease; */
 }
 @keyframes toot-toot {
     0% {
-        top:0;
-        left:20%;
-        transform: rotate(90deg);
+        top:12.5%;
+        left:12.5%;
+        transform: translate(-50%,-80%) rotateY(0deg);
     }
-    25% {
-        top:80%;
-        left:20%;
-        transform: rotate(0deg);
+    6% {
+        top:12.5%;
+        left:37.5%;
     }
-    50% {
-        top:80%;
-        left:67%;
-        transform: rotate(-90deg);
+    12% {
+        top:12.5%;
+        left:62.5%;
     }
-    75% {
-        top:0;
-        left:67%;
-        transform: rotate(-180deg);
+    18% {
+        top:12.5%;
+        left:87.5%;
+        transform: translate(-50%,-80%) rotateY(0deg);
+    }
+    24% {
+        top:37.5%;
+        left:87.5%;
+        transform: translate(-50%,-80%) rotateY(180deg);
+    }
+    30% {
+        top:37.5%;
+        left:62.5%;
+    }
+    36% {
+        top:37.5%;
+        left:37.5%;
+    }
+    42% {
+        top:37.5%;
+        left:12.5%;
+        transform: translate(-50%,-80%) rotateY(180deg);
+    }
+    48% {
+        top:62.5%;
+        left:12.5%;
+        transform: translate(-50%,-80%) rotateY(0deg);
+    }
+    54% {
+        top:62.5%;
+        left:37.5%;
+    }
+    60% {
+        top:62.5%;
+        left:62.5%;
+    }
+    66% {
+        top:62.5%;
+        left:87.5%;
+        transform: translate(-50%,-80%) rotateY(0deg);
+    }
+    72% {
+        top:87.5%;
+        left:87.5%;
+        transform: translate(-50%,-80%) rotateY(180deg);
+    }
+    78% {
+        top:87.5%;
+        left:62.5%;
+    }
+    84% {
+        top:87.5%;
+        left:37.5%;
+    }
+    90% {
+        top:87.5%;
+        left:12.5%;
     }
     100% {
-        top: 0;
-        left: 20%;
-        transform: rotate(-270deg);
+        top:87.5%;
+        left:12.5%;
+        transform: translate(-50%,-80%) rotateY(180deg);
     }
+
 }
 
 @media screen and (max-width: 1080px) {
     #game-screen {
         height: auto;
-        grid-template-rows: auto 50vh auto;
-        grid-template-columns: 50% 50%;
-        grid-template-areas: 'players players'
-                             'game game'
-                             'alerts projects';
+        grid-template-rows: 50vh auto auto auto;
+        grid-template-columns: 100%;
+        grid-template-areas: 'game'
+                             'players'
+                             'alerts'
+                             'projects';
     }
 }

@@ -5,6 +5,7 @@
     <title>Game Screen</title>
     <link rel="stylesheet" href="../css/style.css"/>
     <link rel="stylesheet" href="../css/game.css"/>
+    <link rel="stylesheet" href="../css/slider.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/game.js"></script>
@@ -20,7 +21,7 @@
             <article class="player-template">
                 <h2 class="username">USER1</h2>
                 <h2>£<span class="funds">00.00</span></h2>
-                <div class="player-colour"></div>
+                <div class="player-colour"><img src="../images/Choo2.png" class="choo"></div>
                 <form class="back-forward">
                     <input type="button" class="back" value="<">
                     <input type="button" class="forward" value=">">
@@ -29,7 +30,7 @@
                     <input type="range" name="R" min="0" max="255">
                     <input type="range" name="G" min="0" max="255">
                     <input type="range" name="B" min="0" max="255">
-                    <input type="button" class="colour" value="Set">
+                    <input type="button" class="colour" value="Set Colour">
                 </form>
             </article>
         </section>
@@ -67,7 +68,7 @@
             <line class="train-line" id="line14"/>
             <line class="train-line" id="line15"/>
             </svg>
-            <img src="../images/Choo.png" id="game-train">
+            <!-- <img src="../images/Choo2.png" id="game-train"> -->
         </section>
         <section id="game-projects">
             <article class="project-template">
@@ -89,6 +90,7 @@
     
     
     <input id="delete-players" type="button" value="Delete Players">
+    <input id="reset-time" type="button" value="Reset Time">
     <?php include '../footer.php' ?>
 </body>
 

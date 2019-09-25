@@ -106,7 +106,7 @@ function queryData(query) {
         q: query // query for 'X'
       };
       $.ajax({
-        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM %22'+resource_id+'%22 WHERE %22Position%22 LIKE %27%25'+query+'%25%27 LIMIT 1 OFFSET 20',//OFFSET n to select nth row
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM %22'+resource_id+'%22 WHERE %22Position%22 LIKE %27%25'+query+'%25%27 LIMIT 1',//OFFSET n to select nth row
         // data: data,
         dataType: 'jsonp',
         cache: true,
@@ -145,6 +145,52 @@ function imageQuery(query,data) {
 //       });
 // }
 
+function generateEmployee(prof) {
+    var resource_id = 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040';
+    $.ajax({
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT COUNT(*) FROM %22'+resource_id+'%22 WHERE %22Position%22 LIKE %27%25'+prof+'%25%27',//OFFSET n to select nth row
+        // data: data,
+        dataType: 'jsonp',
+        cache: true,
+        success: function(count) {
+            console.log(count.result.records[0].count);
+            var off = Math.floor(Math.random()*parseInt(count.result.records[0].count));
+            console.log("random number: "+off);
+            $.ajax({
+                url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT * FROM %22'+resource_id+'%22 WHERE %22Position%22 LIKE %27%25'+prof+'%25%27 LIMIT 1 OFFSET '+off,//OFFSET n to select nth row
+                dataType: 'jsonp',
+                cache: true,
+                success: function(empData) {
+                    var productivity = 1;
+                    var education = 1;
+                    var experience = 1;
+                    var empName = "Badname";
+                    var empPos = "badpos";
+                    var empDep = "baddep";
+                    var empPay = "12.34";
+
+                    $.each(empData.result.records, function(recordID, recordValue) {
+                        empName = recordValue["Name"];
+                        empPos = recordValue["Position"];
+                        empDep = recordValue["Branch"];
+                        empPay = "30.00";
+                        // empPay = recordValue["Remuneration"];
+                    });
+                    $.ajax({
+                        url: "../database.php?action=createEmployee&uID=1000000059&empName="+empName+"&empPos="+empPos+"&empDep="+empDep+"&empPay="+empPay+"&empProd="+productivity+"&empEdu="+education+"&empExp="+experience,
+                        //dataType: "json",
+                        success: function(results) {
+                            //do something
+                        }
+                    });
+                }
+              });
+
+        }
+      });
+
+}
+
 function showProfessions() {
     var resource_id = 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040'
     var data = {
@@ -163,6 +209,8 @@ function showProfessions() {
 };
 
 function iterateJobs(data) {
+
+    generateEmployee("Engineer");
 
 	console.log(data);
 

@@ -29,6 +29,12 @@
         </ul>
     </section>
 
+    <section id="emp-from-db">
+        <article class="emp-temp">
+            <input type="button" id="test" value="generate">
+        </article>
+    </section>
+
     <article class="record record-template">
 			<h2>Name</h2>
 			<p class="year">Record Year</p>
