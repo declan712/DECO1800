@@ -37,7 +37,7 @@ function iteratePlayers(data) {
         }
     }
     $(".player.old").remove();
-    setTimeout(getPlayers,500);
+    // setTimeout(getPlayers,500);
 }
 
 function iterateProjects(data) {
@@ -61,36 +61,36 @@ function iterateProjects(data) {
             $("#project-"+projectID+" .project-emp").html("Need: "+projectEmp);
         }
     }
-    setTimeout(getProjects,5000);
+    // setTimeout(getProjects,5000);
 }
 
-function move(pData,dir) {
-    playerData = pData.split(",");
-    pPos = parseInt(playerData[4]);
-    if (dir=="forward" && playerData[4] < 15) {
-        $.ajax({
-            url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos+1),
-            success: function(results) {
-            }
-        });
-    } else if (dir=="back" && playerData[4] > 0) {
-        $.ajax({
-            url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos-1),
-            success: function(results) {
-            }
-        });
-    }
-}
+// function move(pData,dir) {
+//     playerData = pData.split(",");
+//     pPos = parseInt(playerData[4]);
+//     if (dir=="forward" && playerData[4] < 15) {
+//         $.ajax({
+//             url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos+1),
+//             success: function(results) {
+//             }
+//         });
+//     } else if (dir=="back" && playerData[4] > 0) {
+//         $.ajax({
+//             url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos-1),
+//             success: function(results) {
+//             }
+//         });
+//     }
+// }
 
-function movePlayer(pID, dir) {
-    $.ajax({
-        url: "../database.php?action=getPlayer&uID="+pID,
-        //dataType: "json",
-        success: function(results) {
-            move(results,dir);
-        }
-    });
-}
+// function movePlayer(pID, dir) {
+//     $.ajax({
+//         url: "../database.php?action=getPlayer&uID="+pID,
+//         //dataType: "json",
+//         success: function(results) {
+//             move(results,dir);
+//         }
+//     });
+// }
 
 function getPlayers() {
     
@@ -210,63 +210,80 @@ function drawTime(time) {
     $("#game-time").text(month+" "+year);
 }
 
-function setPlayerFunds(playerID,money) {
-    $.ajax({
-        url: "../database.php?action=setPlayerData&uID="+playerID+"&col=projectMoney&val="+money,
-        success: function(result) {
-        }
-    });
-}
+// function setPlayerFunds(playerID,money) {
+//     $.ajax({
+//         url: "../database.php?action=setPlayerData&uID="+playerID+"&col=projectMoney&val="+money,
+//         success: function(result) {
+//         }
+//     });
+// }
 
-function iteratePlayerIncome(players) {
-    var tempPlayers = players.split(";");
-    for (i=0;i<tempPlayers.length;i++) {
-        var player = tempPlayers[i].split(",");
-        var playerID = player[0];
-        var playerMoney = player[2];
-        var playerIncome = player[5];
-        var newMoney = (parseFloat(playerMoney) + parseFloat(playerIncome)).toFixed(2);
-        $("#player-"+playerID+" .funds").html(newMoney+" (+"+playerIncome+")");
-        setPlayerFunds(playerID,newMoney);
-    }
-}
+// function iteratePlayerIncome(players) {
+//     var tempPlayers = players.split(";");
+//     for (i=0;i<tempPlayers.length;i++) {
+//         var player = tempPlayers[i].split(",");
+//         var playerID = player[0];
+//         var playerMoney = player[2];
+//         var playerIncome = player[5];
+//         var newMoney = (parseFloat(playerMoney) + parseFloat(playerIncome)).toFixed(2);
+//         $("#player-"+playerID+" .funds").html(newMoney+" (+"+playerIncome+")");
+//         setPlayerFunds(playerID,newMoney);
+//     }
+// }
 
-function givePlayersIncome() {
-    $.ajax({
-        url: "../database.php?action=getAllPlayers",
-        success: function(players) {
-            iteratePlayerIncome(players);
-        }
-    });
-}
+// function givePlayersIncome() {
+//     $.ajax({
+//         url: "../database.php?action=getAllPlayers",
+//         success: function(players) {
+//             iteratePlayerIncome(players);
+//         }
+//     });
+// }
 
-function advanceTime(time,gID) {
-    var newTime = time+1
-    $.ajax({
-        url: "../database.php?action=setGameTime&gID="+gID+"&time="+newTime,
-        success: function() {
-            drawTime(newTime);
-            givePlayersIncome();
-            setTimeout(updateTime,6000);
-        }
-    });
-}
+// function advanceTime(time,gID) {
+//     var newTime = time+1
+//     $.ajax({
+//         url: "../database.php?action=setGameTime&gID="+gID+"&time="+newTime,
+//         success: function() {
+//             drawTime(newTime);
+//             givePlayersIncome();
+//             setTimeout(updateTime,6000);
+//         }
+//     });
+// }
 
 function updateTime() {
     gID=1;
     $.ajax({
         url: "../database.php?action=getGameTime&gID="+gID,
         success: function(time) {
-            advanceTime(parseInt(time),gID);
+            drawTime(parseInt(time));
         }
     });
 }
 
-$(document).ready(function() {
+function refreshScreen(i) {
     getPlayers();
-    getProjects();
+    if (i=0) {
+        getProjects();
+        updateTime();
+    }
+    if (i=5) {
+        i=0;
+    } else {
+        i +=1;
+    }
+    console.log("refresh - i="+i);
+    //setTimeout(refreshScreen(i),1000);
+}
+
+$(document).ready(function() {
+    refreshScreen(0);
     drawLines();
-    updateTime();
+    // getPlayers();
+    // getProjects();
+    // drawLines();
+    // updateTime();
     window.addEventListener("resize", drawLines);
     $("#clearStorage").click(function(event) {
         event.preventDefault();
@@ -281,32 +298,32 @@ $(document).ready(function() {
     $(document).on('click',".close-preview",function() {
         $("#lightbox").css("display","none");
     });
-    $("#delete-players").click(function(event) {
-        $.ajax({
-            url: "../database.php?action=deleteAllPlayers",
-            //dataType: "json",
-            success: function(results) {
-            }
-        });
-    });
-    $("#reset-time").click(function(event) {
-        $.ajax({
-            url: "../database.php?action=setGameTime&gID=1&time=0",
-            success: function(results) {
-            }
-        });
-        $.ajax({
-            url: "../database.php?action=resetMoney&gID=1",
-            success: function(results) {
-            }
-        });
-    });
-    $(document).on('click',".back-forward input",function() {
-        var ID = $(this).parent().parent().attr("id");
-        var pID = ID.split("-")[1];
-        var dir = $(this).attr("class");
-        movePlayer(pID,dir);
-    });
+    // $("#delete-players").click(function(event) {
+    //     $.ajax({
+    //         url: "../database.php?action=deleteAllPlayers",
+    //         //dataType: "json",
+    //         success: function(results) {
+    //         }
+    //     });
+    // });
+    // $("#reset-time").click(function(event) {
+    //     $.ajax({
+    //         url: "../database.php?action=setGameTime&gID=1&time=0",
+    //         success: function(results) {
+    //         }
+    //     });
+    //     $.ajax({
+    //         url: "../database.php?action=resetMoney&gID=1",
+    //         success: function(results) {
+    //         }
+    //     });
+    // });
+    // $(document).on('click',".back-forward input",function() {
+    //     var ID = $(this).parent().parent().attr("id");
+    //     var pID = ID.split("-")[1];
+    //     var dir = $(this).attr("class");
+    //     movePlayer(pID,dir);
+    // });
     $(document).on('click',".colour-form input[type=button]",function() {
         var ID = $(this).parent().parent().attr("id");
         var pID = ID.split("-")[1];
