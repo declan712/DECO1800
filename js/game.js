@@ -262,23 +262,15 @@ function updateTime() {
     });
 }
 
-function refreshScreen(i) {
+function refreshScreen() {
     getPlayers();
-    if (i=0) {
-        getProjects();
-        updateTime();
-    }
-    if (i=5) {
-        i=0;
-    } else {
-        i +=1;
-    }
-    console.log("refresh - i="+i);
-    //setTimeout(refreshScreen(i),1000);
+    //getProjects();
+    updateTime();
+    setTimeout(refreshScreen,5000);
 }
 
 $(document).ready(function() {
-    refreshScreen(0);
+    refreshScreen();
     drawLines();
     // getPlayers();
     // getProjects();

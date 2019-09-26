@@ -94,7 +94,7 @@ function advanceTime() {
                 url: "../database.php?action=setGameTime&gID="+gID+"&time="+newTime,
                 success: function() {
                     givePlayersIncome();
-                    setTimeout(advanceTime,5000);
+                    setTimeout(advanceTime,10000);
                 }
             });
         }
