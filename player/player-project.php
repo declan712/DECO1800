@@ -7,8 +7,10 @@
     <!-- <p><span class="project-player">"+projectData[5]+"</span></p> -->
 </section>
 <section class="employee">
-
+employee option 1
+<input type="button" value="Hire">
 </section>
 <section class="employee">
-    
+employee option 2
+<input type="button" value="Hire">
 </section>
