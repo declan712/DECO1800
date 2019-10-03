@@ -93,6 +93,7 @@
     
     <input id="delete-players" type="button" value="Delete Players">
     <input id="reset-time" type="button" value="Reset Time">
+    <input id="reset-players" type="button" value="Reset Players">
     <?php include '../footer.php' ?>
 </body>
 

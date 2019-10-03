@@ -23,12 +23,12 @@
                 <h2 class="username">USER1</h2>
                 <h2>£<span class="funds">00.00</span></h2>
                 <div class="player-colour"><img src="../images/Choo2.png" class="choo"></div>
-                <form class="colour-form">
+                <!-- <form class="colour-form">
                     <input type="range" name="R" min="0" max="255">
                     <input type="range" name="G" min="0" max="255">
                     <input type="range" name="B" min="0" max="255">
                     <input type="button" class="colour" value="Set Colour">
-                </form>
+                </form> -->
             </article>
         </section>
         <section id="game-map">

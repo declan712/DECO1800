@@ -6,11 +6,29 @@
     <p>Employee Required: <span class="project-required">"+projectData[4]+"</span></p>
     <!-- <p><span class="project-player">"+projectData[5]+"</span></p> -->
 </section>
-<section class="employee">
-employee option 1
-<input type="button" value="Hire">
-</section>
-<section class="employee">
-employee option 2
-<input type="button" value="Hire">
-</section>
+<article class="employee">
+    <img src="../images/placeholder.jpg">
+    <h1 class="emp-name">emp-name</h1>
+    <h2 class="emp-job">emp-job</h2>
+    <h2 class="emp-price">emp-price</h2>
+    <section class="emp-stats">
+        <div class="stat-bar"></div>
+        <div class="stat-bar"></div>
+        <div class="stat-bar"></div>
+    </section>
+    <input type="button" class="emp-hire" value="Hire">
+    <p class="emp-details"></p>
+</article>
+<article class="employee">
+    <img src="../images/placeholder.jpg">
+    <h1 class="emp-name">emp-name</h1>
+    <h2 class="emp-job">emp-job</h2>
+    <h2 class="emp-price">emp-price</h2>
+    <section class="emp-stats">
+        <div class="stat-bar"></div>
+        <div class="stat-bar"></div>
+        <div class="stat-bar"></div>
+    </section>
+    <input type="button" class="emp-hire" value="Hire">
+    <p class="emp-details"></p>
+</article>

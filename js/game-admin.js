@@ -52,7 +52,7 @@ function setPlayerFunds(playerID,money) {
 function iteratePlayerIncome(players) {
     var tempPlayers = players.split(";");
     for (i=0;i<tempPlayers.length;i++) {
-        var player = tempPlayers[i].split(",");
+        var player = tempPlayers[i].split("|");
         var playerID = player[0];
         var playerMoney = player[2];
         var playerIncome = player[5];
@@ -90,6 +90,10 @@ function advanceTime() {
         success: function(time) {
             var currentTime = parseInt(time);
             var newTime = currentTime+1
+            if (newTime%3==0) {
+                giveProjects();
+                console.log("Generating Projects....");
+            };
             $.ajax({
                 url: "../database.php?action=setGameTime&gID="+gID+"&time="+newTime,
                 success: function() {
@@ -101,15 +105,25 @@ function advanceTime() {
     });
 }
 
+
 $(document).ready(function() {
 
-    advanceTime();
+    setTimeout(advanceTime,2000);
 
     $("#delete-players").click(function(event) {
         $.ajax({
             url: "../database.php?action=deleteAllPlayers",
             //dataType: "json",
             success: function(results) {
+                Console.log("Deleting Players...");
+            }
+        });
+    });
+    $("#reset-players").click(function(event) {
+        $.ajax({
+            url: "../database.php?action=resetPlayers&gID=1",
+            success: function(results) {
+                console.log("Resetting Players...");
             }
         });
     });

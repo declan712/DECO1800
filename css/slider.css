@@ -108,3 +108,14 @@ input[type=range]:nth-of-type(3)::-webkit-slider-runnable-track {
   background: linear-gradient(to right, #000000,#0000FF);
   border-radius: 0;
 }
+
+@media screen and (max-width: 1080px) {
+  input[type=range]::-webkit-slider-runnable-track {
+    height:1em;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    height:2em;
+    width:0.75em;
+    margin-top:-0.5em;
+  }
+}

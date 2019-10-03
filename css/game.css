@@ -203,10 +203,13 @@ input[type="button"].more-info {
     height:100%;
     width:100%;
 }
-#game-map line {
-    stroke: red;
-    stroke-width:10px
+#game-map .train-line {
+    stroke: #884422;
+    stroke-width:20px;
+    stroke-dasharray: 4;
+    outline: 2px solid grey;
 }
+
 #game-train {
     max-width:100px;
     position: absolute;

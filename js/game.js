@@ -1,10 +1,16 @@
+var players = [];
+var positions = [];
+// uID, name, money, progress, colour, income
+
 function iteratePlayers(data) {
     $(".player").addClass("old");
     $(".player-piece").remove();
     var playerTemplate = $(".player-template");
     var tempPlayers = data.split(";");
+    players = [];
     for (i=0;i<tempPlayers.length;i++) {
-        var player = tempPlayers[i].split(",");
+        var player = tempPlayers[i].split("|");
+        players[i] = player;
         var playerID = player[0];
         var playerName = player[1];
         var playerMoney = player[2];
@@ -40,58 +46,6 @@ function iteratePlayers(data) {
     // setTimeout(getPlayers,500);
 }
 
-function iterateProjects(data) {
-    $(".project").remove();
-    var projectTemplate = $(".project-template");
-    var tempProjects = data.split(";");
-    for (i=0;i<tempProjects.length;i++) {
-        var project = tempProjects[i].split(",");
-        var projectID = project[0];
-        var projectName = project[1];
-        var projectCost = project[2];
-        var projectEmp = project[3];
-
-        if (projectID && projectName) {
-            var clonedProjectTemplate = projectTemplate.clone();
-            clonedProjectTemplate.attr("id","project-"+projectID).attr("class","project");
-            clonedProjectTemplate.appendTo("#game-projects");
-
-            $("#project-"+projectID+" .project-name").html(projectName);
-            $("#project-"+projectID+" .project-cost").html("£"+projectCost);
-            $("#project-"+projectID+" .project-emp").html("Need: "+projectEmp);
-        }
-    }
-    // setTimeout(getProjects,5000);
-}
-
-// function move(pData,dir) {
-//     playerData = pData.split(",");
-//     pPos = parseInt(playerData[4]);
-//     if (dir=="forward" && playerData[4] < 15) {
-//         $.ajax({
-//             url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos+1),
-//             success: function(results) {
-//             }
-//         });
-//     } else if (dir=="back" && playerData[4] > 0) {
-//         $.ajax({
-//             url: "../database.php?action=setPlayerData&uID="+playerData[0]+"&col=gameProgress&val="+(pPos-1),
-//             success: function(results) {
-//             }
-//         });
-//     }
-// }
-
-// function movePlayer(pID, dir) {
-//     $.ajax({
-//         url: "../database.php?action=getPlayer&uID="+pID,
-//         //dataType: "json",
-//         success: function(results) {
-//             move(results,dir);
-//         }
-//     });
-// }
-
 function getPlayers() {
     
     $.ajax({
@@ -100,36 +54,6 @@ function getPlayers() {
         success: function(results) {
             // console.log(results);
             iteratePlayers(results);
-        }
-    });
-}
-
-function getProjects() {
-    
-    $.ajax({
-        url: "../database.php?action=getAllProjects",
-        //dataType: "json",
-        success: function(results) {
-            // console.log(results);
-            iterateProjects(results);
-        }
-    });
-}
-
-function displayProjectLightbox(data) {
-    var lightbox = $("#lightbox");
-    var projectData = data.split(",");
-    lightbox.html("<input type=\"button\" value=\"X\" class=\"close-preview\"><section id=\"project-details\"> <p class=\"project-name\">"+projectData[1]+"</p> <p class=\"project-status\">"+projectData[3]+"</p> <p class=\"project-cost\">"+projectData[2]+"</p> <p class=\"project-required\">"+projectData[4]+"</p> <p class=\"project-player\">"+projectData[5]+"</p> </section> ");
-    lightbox.css("display","flex");
-}
-
-function showProjectDetails(pID) {
-    $.ajax({
-        url: "../database.php?action=getProj&pID="+pID,
-        //dataType: "json",
-        success: function(results) {
-            console.log(results);
-            displayProjectLightbox(results);
         }
     });
 }
@@ -210,47 +134,57 @@ function drawTime(time) {
     $("#game-time").text(month+" "+year);
 }
 
-// function setPlayerFunds(playerID,money) {
-//     $.ajax({
-//         url: "../database.php?action=setPlayerData&uID="+playerID+"&col=projectMoney&val="+money,
-//         success: function(result) {
-//         }
-//     });
-// }
+function getPositions() {
+    var resource_id = 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040'
+    var data = {
+        resource_id: 'cdafbbbf-c9ca-46a1-9f18-ecd9e8943040', // the resource id
+        limit: 500,
+      };
+      $.ajax({
+        url: 'https://data.qld.gov.au/api/3/action/datastore_search_sql?sql=SELECT DISTINCT %22Position%22 FROM %22'+resource_id+'%22 ',
+        data: data,
+        dataType: 'jsonp',
+        cache: true,
+        success: function(data) {
+            positions=data.result.records;
+        }
+      });
+};
 
-// function iteratePlayerIncome(players) {
-//     var tempPlayers = players.split(";");
-//     for (i=0;i<tempPlayers.length;i++) {
-//         var player = tempPlayers[i].split(",");
-//         var playerID = player[0];
-//         var playerMoney = player[2];
-//         var playerIncome = player[5];
-//         var newMoney = (parseFloat(playerMoney) + parseFloat(playerIncome)).toFixed(2);
-//         $("#player-"+playerID+" .funds").html(newMoney+" (+"+playerIncome+")");
-//         setPlayerFunds(playerID,newMoney);
-//     }
-// }
+function generateProject() {
+    var pDetails = [];
+    pDetails[0] = "test project "+Math.round(Math.random()*100);
+    pDetails[1] = (Math.random()*100).toFixed(2);
+    pDetails[2] = positions[Math.round(Math.random()*positions.length)].Position;
+    return pDetails;
+}
 
-// function givePlayersIncome() {
-//     $.ajax({
-//         url: "../database.php?action=getAllPlayers",
-//         success: function(players) {
-//             iteratePlayerIncome(players);
-//         }
-//     });
-// }
-
-// function advanceTime(time,gID) {
-//     var newTime = time+1
-//     $.ajax({
-//         url: "../database.php?action=setGameTime&gID="+gID+"&time="+newTime,
-//         success: function() {
-//             drawTime(newTime);
-//             givePlayersIncome();
-//             setTimeout(updateTime,6000);
-//         }
-//     });
-// }
+//  give each player a project, and a chance of getting a sabatage project
+function giveProjects() {
+    if (players.length < 2) {
+        return 0;
+    }
+    var firstPlace = players[0];
+    var fPos = parseInt(firstPlace[3]);
+    console.log("first place: "+firstPlace[1]);
+    var pDetails = generateProject();
+    for(i=0; i<players.length;i++) {
+        $.ajax({
+            url: "../database.php?action=givePlayerProject&uID="+players[i][0]+"&pName="+pDetails[0]+"&pCost="+pDetails[1]+"&emp="+pDetails[2],
+            //dataType: "json",
+            success: function(results) {
+            }
+        });
+        var curPos = parseInt(players[i][3])
+        if ( curPos < fPos) {
+            var sabChance = Math.round(Math.random()*((fPos-curPos)/16)*100);
+            if (Math.round(Math.random()*100) < sabChance) {
+                console.log(players[i][1]+" is "+(fPos-curPos)+" places behind and gets a chance to sabotage");
+            }
+            // console.log(players[i][1]+" is "+(fPos-curPos)+" places behind. Chance of sabotage: "+sabChance+"%");
+        }
+    }
+}
 
 function updateTime() {
     gID=1;
@@ -266,16 +200,19 @@ function refreshScreen() {
     getPlayers();
     //getProjects();
     updateTime();
+    // console.log("players: "+(players.length-1));
+    // for (i=0;i<players.length-1;i++) {
+    //     console.log("player "+i+": "+players[i]);
+    // }
     setTimeout(refreshScreen,5000);
 }
 
 $(document).ready(function() {
     refreshScreen();
     drawLines();
-    // getPlayers();
-    // getProjects();
-    // drawLines();
-    // updateTime();
+    getPositions();
+
+
     window.addEventListener("resize", drawLines);
     $("#clearStorage").click(function(event) {
         event.preventDefault();
@@ -290,32 +227,7 @@ $(document).ready(function() {
     $(document).on('click',".close-preview",function() {
         $("#lightbox").css("display","none");
     });
-    // $("#delete-players").click(function(event) {
-    //     $.ajax({
-    //         url: "../database.php?action=deleteAllPlayers",
-    //         //dataType: "json",
-    //         success: function(results) {
-    //         }
-    //     });
-    // });
-    // $("#reset-time").click(function(event) {
-    //     $.ajax({
-    //         url: "../database.php?action=setGameTime&gID=1&time=0",
-    //         success: function(results) {
-    //         }
-    //     });
-    //     $.ajax({
-    //         url: "../database.php?action=resetMoney&gID=1",
-    //         success: function(results) {
-    //         }
-    //     });
-    // });
-    // $(document).on('click',".back-forward input",function() {
-    //     var ID = $(this).parent().parent().attr("id");
-    //     var pID = ID.split("-")[1];
-    //     var dir = $(this).attr("class");
-    //     movePlayer(pID,dir);
-    // });
+
     $(document).on('click',".colour-form input[type=button]",function() {
         var ID = $(this).parent().parent().attr("id");
         var pID = ID.split("-")[1];
@@ -324,11 +236,5 @@ $(document).ready(function() {
         var B = $(this).parent().children("input:nth-of-type(3)").val();
         setPlayerColour(pID,R,G,B);
     });
-    // $(".project-template").click(function(event) {
-    //     event.preventDefault();
-        
-    //     //var pID = $(this.attr("id"));
-    //     //console.log("pID: "+pID);
-    //     //showProjectDetails(pID);
-    // });
+
 });
