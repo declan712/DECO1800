@@ -142,24 +142,25 @@ function setPlayerData($uID,$col,$value) {
         case "gameProgress":
             $sql = "UPDATE `userCreated` SET `gameProgress` = '".$value."' WHERE `userID` = '".$uID."'";
         break;
+        case "userIncome":
+            $sql = "UPDATE `userCreated` SET `userIncome` = '".$value."' WHERE `userID` = '".$uID."'";
+        break;
     }
     $playerData = $conn->query($sql);
 }
 
-function createEmployee($uID, $empName, $empPos, $empDep, $empPay, $empProd, $empEdu, $empExp) {
+function createEmployee($uID, $empName, $empPos, $empDep, $empPay, $empProd, $empEdu, $empExp, $empImg) {
     global $conn;
-    $sql = "INSERT INTO `employee` (userID,empName,empPos,empDepartment,empPay,empProd,empEdu,empExp) 
-            VALUES ('".$uID."','".$empName."','".$empPos."','".$empDep."','".$empPay."','".$empProd."','".$empEdu."','".$empExp."')";
+    $sql = "INSERT INTO `employee` (userID,empName,empPos,empDepartment,empPay,empProd,empEdu,empExp,empImg) 
+            VALUES ('".$uID."','".$empName."','".$empPos."','".$empDep."','".$empPay."','".$empProd."','".$empEdu."','".$empExp."','".$empImg."')";
     $q1 = $conn->query($sql);
     // sleep(1);
     $sql = "SELECT * FROM `employee` 
             WHERE `userID` = '".$uID."'
-            
+            AND `empName` LIKE '%".$empName."%'
             ORDER BY `empID` DESC
             LIMIT 1";
-
-// AND `empName` = '".$empName."'
-// AND `empPos` = '".$empPos."' 
+            // AND `empPos` = '".$empPos."' 
             // AND `empDep` = '".$empDep."'
             // AND `empPay` = '".$empPay."'
             // AND `empProd` = '".$empProd."'
@@ -194,9 +195,22 @@ function getEmployee($empID) {
     $q = $conn->query($sql);
     if ($q->num_rows > 0) {
         $row = $q->fetch_assoc();
-        echo($row["empID"]."|".$row["empName"]."|".$row["empPos"]."|".$row["empDep"]."|".$row["empPay"]."|".$row["empProd"]."|".$row["empEdu"]."|".$row["empExp"]);
+        echo($row["empID"]."|".$row["empName"]."|".$row["empPos"]."|".$row["empDep"]."|".$row["empPay"]."|".$row["empProd"]."|".$row["empEdu"]."|".$row["empExp"]."|".$row["empImg"]);
     } else {
         echo("ERROR: Employee not found");
+    }
+}
+
+function getSabProj($uID) {
+    global $conn;
+    $sql = "SELECT * FROM `sabProject` WHERE `projectComplete` = 'NONE' && `projectPlayer` = '".$uID."'";
+    $playerData = $conn->query($sql);
+    if ($playerData->num_rows > 0) {
+        while($row = $playerData->fetch_assoc()) {
+            echo($row["projectID"]."|".$row["projectName"]."|".$row["projectCost"]."|".$row["targetPlayer"]."|".$row["sabEffect"].";");
+        }
+    } else {
+        echo("ERROR: No Projects Found");
     }
 }
 
@@ -207,25 +221,68 @@ function giveProject($uID, $pName,$pCost,$emp) {
     $q = $conn->query($sql);
 }
 
+function giveSabProject($userID,$targetID,$pName,$pCost,$userEffect) {
+    global $conn;
+    $sql = "INSERT INTO `sabProject` (gameID,projectName,projectCost,projectComplete,projectPlayer,targetPlayer,sabEffect)
+            VALUES ('1','".$pName."','".$pCost."','NONE','".$userID."','".$targetID."','".$userEffect."')";
+    $q = $conn->query($sql);
+}
+
 function resetPlayers() {
     global $conn;
-    $sql = "DELETE FROM `gameProject` WHERE `projectID` > '1000'";
+    $sql = "DELETE FROM `gameProject` WHERE `projectID` >= '1000'";
+    $result = $conn->query($sql);
+
+    $sql = "DELETE FROM `gameAlert` WHERE `alertID` >= '1000'";
     $result = $conn->query($sql);
 
     $sql = "DELETE FROM `employee` WHERE `empID` > '1'";
     $result = $conn->query($sql);
 
-    $sql = "DELETE FROM `sabProject` WHERE `projectID` > '1000'";
+    $sql = "DELETE FROM `sabProject` WHERE `projectID` >= '1000'";
     $result = $conn->query($sql);
 
     $sql = "UPDATE `userCreated` SET `projectMoney` = '0.00', `gameProgress` = '0', `userIncome` = '5.00'";
     $result = $conn->query($sql);
 }
 
+function hireEmp($pID,$empID,$uID,$funds,$inc,$prog) {
+    global $conn;
+    $sql = "UPDATE `gameProject` SET `projectComplete` = 'DONE' WHERE `projectID` = '".$pID."'";
+    $result = $conn->query($sql);
+
+    $sql = "UPDATE `userCreated` SET `projectMoney` = '".$funds."', `gameProgress` = '".$prog."', `userIncome` = '".$inc."'  WHERE `userID` = '".$uID."'";
+    $result = $conn->query($sql);
+}
+
+function sabComplete($pID,$sabText) {
+    global $conn;
+    $sql = "UPDATE `sabProject` SET `projectComplete` = 'DONE' WHERE `projectID` = '".$pID."'";
+    $result = $conn->query($sql);
+
+    $sql = "INSERT INTO `gameAlert` (alertText) VALUES ('".$sabText."')";
+    $result = $conn->query($sql);
+}
+
+function getAlerts() {
+    global $conn;
+    $sql = "SELECT * FROM `gameAlert` ORDER BY `alertID` DESC";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo($row["alertID"]."|".$row["alertText"].";");
+        }
+    } else {
+        echo("ERROR: No Alerts Found");
+    }
+}
+
 function checkReq() {
+    // var $msg = ">>";
     switch ($_GET["action"]) {
         case "getPlayer":
-            isset($_GET["uID"]) ? getPlayerData($_GET["uID"]) : "Invalid";
+            isset($_GET["uID"]) ? getPlayerData($_GET["uID"]) : "invalid";
             break;
         case "getAllPlayers":
             getAllPlayerData();
@@ -234,81 +291,60 @@ function checkReq() {
             (isset($_GET["uID"]) && isset($_GET["col"]) && isset($_GET["val"])) ? setPlayerData($_GET["uID"],$_GET["col"],$_GET["val"]) : "invalid";
             break;
         case "resetMoney":
-             isset($_GET["gID"]) ? resetGameMoney($_GET["gID"]) : "Invalid";
+             isset($_GET["gID"]) ? resetGameMoney($_GET["gID"]) : "invalid";
              break;
         case "resetPlayers":
-             isset($_GET["gID"]) ? resetPlayers() : "Invalid";
+             isset($_GET["gID"]) ? resetPlayers() : "invalid";
              break;
         case "getProj":
-            isset($_GET["pID"]) ? getProjectData($_GET["pID"]) : "Invalid";
+            isset($_GET["pID"]) ? getProjectData($_GET["pID"]) : "invalid";
             break;
         case "createEmployee":
-            (isset($_GET["uID"]) && isset($_GET["empName"]) && isset($_GET["empPos"]) && isset($_GET["empDep"]) && isset($_GET["empPay"]) && isset($_GET["empProd"]) && isset($_GET["empEdu"]) && isset($_GET["empExp"])) ? createEmployee($_GET["uID"], $_GET["empName"], $_GET["empPos"], $_GET["empDep"], $_GET["empPay"], $_GET["empProd"], $_GET["empEdu"], $_GET["empExp"]) : "Invalid";
+            (isset($_GET["uID"]) && isset($_GET["empName"]) && isset($_GET["empPos"]) && isset($_GET["empDep"]) && isset($_GET["empPay"]) && isset($_GET["empProd"]) && isset($_GET["empEdu"]) && isset($_GET["empExp"]) && isset($_GET["img"])) ? createEmployee($_GET["uID"], $_GET["empName"], $_GET["empPos"], $_GET["empDep"], $_GET["empPay"], $_GET["empProd"], $_GET["empEdu"], $_GET["empExp"], $_GET["img"]) : "invalid";
             break;
         case "getAllProjects":
-            isset($_GET["uID"]) ? getAllProjectData($_GET["uID"]) : "Invalid";
+            isset($_GET["uID"]) ? getAllProjectData($_GET["uID"]) : "invalid";
             break;
         case "getGameTime":
-            isset($_GET["gID"]) ? getGameTime($_GET["gID"]) : "Invalid";
+            isset($_GET["gID"]) ? getGameTime($_GET["gID"]) : "invalid";
             break;
         case "setGameTime":
             (isset($_GET["gID"]) && isset($_GET["time"])) ? setGameTime($_GET["gID"], $_GET["time"]) : "Invlaid";
             break;
         case "createNewPlayer":
-            isset($_GET["name"]) ? createUser($_GET["name"]) : "Invalid";
+            isset($_GET["name"]) ? createUser($_GET["name"]) : "invalid";
             break;
         case "deleteAllPlayers":
             deletePlayers();
             break;
         case "getEmployee":
-            isset($_GET["empID"]) ? getEmployee($_GET["empID"]) : "Invalid";
+            isset($_GET["empID"]) ? getEmployee($_GET["empID"]) : "invalid";
             break;
         case "empToProj":
-            (isset($_GET["empID"]) && isset($_GET["pID"]) && isset($_GET["pos"])) ? empToProj($_GET["empID"],$_GET["pID"],$_GET["pos"]) : "Invalid";
+            (isset($_GET["empID"]) && isset($_GET["pID"]) && isset($_GET["pos"])) ? empToProj($_GET["empID"],$_GET["pID"],$_GET["pos"]) : "invalid";
             break;
         case "givePlayerProject":
-            (isset($_GET["uID"]) && isset($_GET["pName"]) && isset($_GET["pCost"]) && isset($_GET["emp"])) ? giveProject($_GET["uID"],$_GET["pName"],$_GET["pCost"],$_GET["emp"]) : "Invalid";
+            (isset($_GET["uID"]) && isset($_GET["pName"]) && isset($_GET["pCost"]) && isset($_GET["emp"])) ? giveProject($_GET["uID"],$_GET["pName"],$_GET["pCost"],$_GET["emp"]) : "invalid";
             break;
-        default: "Invalid";
+        case "givePlayerSabProject":
+            (isset($_GET["userID"])&& isset($_GET["targetID"]) && isset($_GET["pName"]) && isset($_GET["pCost"]) && isset($_GET["sabEffect"])) ? giveSabProject($_GET["userID"],$_GET["targetID"],$_GET["pName"],$_GET["pCost"],$_GET["sabEffect"]): "invalid";
+            break;
+        case "getSabProjects":
+            isset($_GET["uID"]) ? getSabProj($_GET["uID"]) : "invalid";
+            break;
+        case "sabComplete":
+            isset($_GET["pID"]) && isset($_GET["sabText"]) ? sabComplete($_GET["pID"],$_GET["sabText"]) : "invalid";
+            break;
+        case "hireEmp":
+            (isset($_GET["pID"]) && isset($_GET["empID"]) && isset($_GET["uID"]) && isset($_GET["funds"]) && isset($_GET["inc"]) && isset($_GET["prog"])) ? hireEmp($_GET["pID"],$_GET["empID"],$_GET["uID"],$_GET["funds"],$_GET["inc"],$_GET["prog"]) : "invalid";
+            break;
+        case "getAlerts":
+            getAlerts();
+            break;
+        default: "invalid";
     }
+    // echo($msg.": ".$_GET["action"]);
 
-
-    // if ($_GET["action"]=="getPlayer" && isset($_GET["uID"])) {
-    //     getPlayerData($_GET["uID"]);
-    // } 
-    // else if ($_GET["action"]=="getAllPlayers") {
-    //     getAllPlayerData();
-    // } 
-    // else if ($_GET["action"]=="setPlayerData" && isset($_GET["uID"]) && isset($_GET["col"]) && isset($_GET["val"])) {
-    //     setPlayerData($_GET["uID"],$_GET["col"],$_GET["val"]);
-    // } 
-    // else if ($_GET["action"]=="resetMoney" && isset($_GET["gID"])) {
-    //     resetGameMoney($_GET["gID"]);
-    // } 
-    // else if ($_GET["action"]=="getProj" && isset($_GET["pID"])) {
-    //     getProjectData($_GET["pID"]);
-    // } 
-    // else if ($_GET["action"]=="createEmployee" && isset($_GET["uID"]) && isset($_GET["empName"]) && isset($_GET["empPos"]) && isset($_GET["empDep"]) && isset($_GET["empPay"]) && isset($_GET["empProd"]) && isset($_GET["empEdu"]) && isset($_GET["empExp"]) ) {
-    //     createEmployee($_GET["uID"], $_GET["empName"], $_GET["empPos"], $_GET["empDep"], $_GET["empPay"], $_GET["empProd"], $_GET["empEdu"], $_GET["empExp"]);
-    // } 
-    // else if ($_GET["action"]=="getAllProjects") {
-    //     getAllProjectData();
-    // } 
-    // else if ($_GET["action"]=="getGameTime" && isset($_GET["gID"])) {
-    //     getGameTime($_GET["gID"]);
-    // } 
-    // else if ($_GET["action"]=="setGameTime" && isset($_GET["gID"]) && isset($_GET["time"])) {
-    //     setGameTime($_GET["gID"], $_GET["time"]);
-    // } 
-    // else if($_GET["action"]=="createNewPlayer" && isset($_GET["name"])) {
-    //     createUser($_GET["name"]);
-    // } 
-    // else if($_GET["action"]=="deleteAllPlayers"){
-    //     deletePlayers(); 
-    // } 
-    // else {
-    //     echo "Invalid";
-    // }
 }
 
 

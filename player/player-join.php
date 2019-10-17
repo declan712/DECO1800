@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Player Screen</title>
+    <title>Join Game</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700,900|Slabo+27px&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"/>
     <link rel="stylesheet" href="../css/player.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

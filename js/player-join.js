@@ -6,7 +6,7 @@ function createNewUser(userName) {
         //dataType: "json",
         success: function(results) {
             console.log("new user: "+results);
-            var user = results.split(",");
+            var user = results.split("|");
             if (user[0]>1000000000) {
                 localStorage.setItem("uID",user[0]);
                 window.location.href="../player/";
@@ -39,7 +39,7 @@ function getPlayer() {
             if (results.includes("ERROR")){
                 localStorage.setItem("uID","");
             } else {
-                var playerData = results.split(",");
+                var playerData = results.split("|");
                 playerName = playerData[1];
             }
             //playerFunds = playerData[2];

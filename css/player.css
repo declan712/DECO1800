@@ -4,16 +4,47 @@
     flex-direction: column;
     justify-content:center;
     position: fixed;
-    top: 20vh;
+    top: 13vh;
     left:5%;
     width:90%;
-    max-height:75vh;
-    background-color: #666666CC;
+    /* max-height:75vh; */
+    background: url("../images/paper.jpg");
+    background-position: center;
+    background-size: cover;
+    box-shadow: 5px 5px 10px 0px black;
     padding: 0.5em;
-    padding-top: 3em;
+}
+.lightbox *{
+    color: #111111EE;
 }
 #instructions {
     padding:2em;
+    max-height:85vh;
+}
+#intro-text {
+    width:100%;
+    height:100%;
+    overflow-y: scroll;
+}
+#intro-text p{
+    margin: 1em 0em;
+}
+#intro-text img {
+    width:80%;
+}
+#intro-text ul {
+    list-style: none;
+}
+.player-info {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.player-info *{
+    color:#222222;
+}
+.player-info .username {
+    font-size: 3em;
 }
 #show-intro {
     position: absolute;
@@ -27,6 +58,9 @@
     background-color: green;
     text-decoration: none;
 }
+#show-intro:active {
+    background:#222222;
+}
 #loading-bar {
     height:2px;
     width: 0px;
@@ -38,27 +72,112 @@
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
-    font-size:2em;
+    font-size:1.5em;
+}
+#project-details .project-name {
+    font-family: 'Slabo 27px', serif;
+    font-size:1.5em;
 }
 .lightbox input[type="button"].close-preview {
     position: absolute;
     right:-0.5em;
-    top:-0.5em;
+    top:-1em;
     width: 2em;
     height: 2em;
     border-radius:1.5em;
+    color:#EEEEEE;
+}
+.lightbox input[type="button"].close-preview:active {
+    background:#EEEEEE;
+    color:#222222;
+}
+.bail-out:active {
+    background:#EEEEEE;
+    color:#222222;
 }
 .project-template {
+    display:none;
+}
+.sab-template {
     display:none;
 }
 #projects {
     width:95%;
 }
+#projects > h1 {
+    color:#222222;
+    font-family: 'Slabo 27px', serif;
+    font-size: 2em;
+    /* background:#DDDDDD;
+    background:url("../images/paper.jpg");
+    background-position: center;
+    padding:0.25em;
+    box-shadow: 2px 4px 6px black; */
+}
 #game-projects .project {
+    padding:1.5em 2em 0 2.5em;
+    margin:0.5em;
+    /* border-radius: 20px; */
+    /* background: linear-gradient(135deg, #DD7700, #AA22AA); */
+    background: url("../images/ticket.jpg");
+    background-size: 100% 100%;
+    min-height: 8em;
+    box-shadow: 3px 3px 10px 1px black;
+    transition: all 0.2s ease;
+    filter: brightness(1.1);
+    overflow-x: hidden;
+}
+#game-projects .project .project-name{
+    margin-left:-1.5em;
+    font-size:0.95em;
+    font-family: 'Slabo 27px', serif;
+    max-width:86%;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+#game-projects .project .project-cost{
+    font-size:1.5em;
+}
+#game-projects .project .project-emp{
+    font-size:0.8em;
+    max-width:77%;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+#game-projects .project *{
+    color: #222222DD;
+    white-space: nowrap;
+}
+#game-projects .project:hover {
+    filter: brightness(1.2);
+}
+#game-projects .project:active {
+    box-shadow: 1px 1px 10px 0px black;
+    filter: brightness(0.5);
+}
+#sab-projects .sab-project {
     padding:1em;
     margin:0.2em;
     border-radius: 20px;
-    background: linear-gradient(135deg, #DD7700, #AA22AA);
+    background: url("../images/paper.jpg");
+    filter: hue-rotate(-20deg) saturate(1.5) contrast(1.5);
+    box-shadow: 3px 3px 10px 1px black;
+}
+.sab-project  *{
+    /* color: #111111EE; */
+}
+input[type="button"].sabotage {
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    float: right;
+    /* color:#EEEEEE; */
+}
+input[type="button"].sabotage:active {
+    background:#EEEEEE;
+    color:#222222;
 }
 input[type="button"].more-info {
     width: 2em;
@@ -84,13 +203,15 @@ input[type="button"].more-info {
     height:42vw;
 }
 #player-train {
-    width:40vw;
-    margin: 1vw 0 0 1vw;
+    width:100%;
+    border: 1em solid transparent;
 }
-
+#project-string {
+    display:none;
+}
 .lightbox .employee {
     display: grid;
-    grid-template-columns: 25% 50% auto;
+    grid-template-columns: 25% 50% 22%;
     grid-template-rows: auto auto auto;
     grid-template-areas: "img name cost"
                          "img job ."
@@ -98,14 +219,23 @@ input[type="button"].more-info {
     grid-gap: 0.5em;
     padding: 0.5em;
     margin: 0.5em;
-    border: 1px solid red;
-    background: #333333;
+    border: 3px solid #111111EE;
 }
 .employee img {
-    grid-area: img;
     margin:auto;
+    max-height:100%;
+    filter: sepia(1);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.employee .img-container {
+    grid-area: img;
+    overflow: hidden;
     max-width:100%;
     max-height:100%;
+    position: relative;
+    
 }
 .employee .emp-details {
     display:none;
@@ -121,15 +251,66 @@ input[type="button"].more-info {
 }
 .employee .emp-price {
     grid-area: cost;
+    text-align: end;
+    font-size: 1.5em;
+}
+.employee .emp-price::before {
+    content: "£";
 }
 .employee .emp-hire {
     grid-area: hire;
     margin-top:auto;
+    background: none;
+    border:3px solid #111111EE;
+}
+.employee .emp-hire:active {
+    background: #111111EE;
+    color: #EEEEEE;
 }
 
 .emp-stats .stat-bar {
     width:100%;
-    /* padding:0.5em; */
+    /* font-size: 0;
+    padding: 30px 0;
+    margin: 10px 0; */
+    color: #00000000;
+    /* padding:0.1em 0; */
     margin: 0.2em 0;
     background: #222222;
+}
+.emp-stats .stat-bar:nth-of-type(1)::before {
+    content: " 🛠️";
+    color:black;
+}
+.emp-stats .stat-bar:nth-of-type(2)::before {
+    content: " 🎓";
+    color:black;
+}
+.emp-stats .stat-bar:nth-of-type(3)::before {
+    content: " ⏱";
+    color:black;
+}
+.hidden {
+    display:none;
+}
+
+#lightbox.result {
+    background: url("../images/times.jpg");
+    width:800px;
+    height:1000px;
+    box-shadow: 5px 5px 20px 0px black;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: start;
+    padding: 200px 2em 2em 2em;
+
+}
+#lightbox.result .project-result *{
+    color:#111111EE;
+    font-size:1.7em;
+    text-align: center;
+}
+
+#lightbox.result .project-result h1 {
+    font-weight: bolder;
 }

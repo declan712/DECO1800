@@ -3,7 +3,31 @@ var playerIncome = 0.00;
 var playerName = "LOADING"
 var uID;
 var playerColour;
+var progress;
 
+
+function playSound(type) {
+    var file = "";
+    switch (type) {
+        case "fail":
+            file = "../audio/wrong.mp3";
+            break;
+        case "pass":
+            file = "../audio/right.mp3";
+            break;
+        case "bonus":
+                file = "../audio/fanfare.mp3";
+            break;
+        case "sab":
+                file = "../audio/evil.mp3";
+            break;
+        case "click":
+                file = "../audio/click.mp3";
+            break;
+    }
+    var audio = new Audio(file);
+    audio.play();
+}
 
 function toShillings(num) {
     if (Math.ceil(num) > num) {
@@ -18,6 +42,7 @@ function updatePlayer() {
     // getPlayer();
     var funds = toShillings(playerFunds);
     $("#funds").text("£"+funds[0]+(funds[1]>0?", "+funds[1]+" Shillings":"")+(funds[2]>0?", "+funds[2]+" Pence":""));
+    $("#income").text(playerIncome);
     $(".username").text(playerName);
     $(".player-colour").css("background-color","#"+playerColour);
     
@@ -50,11 +75,80 @@ function getPlayer() {
             playerName = playerData[1];
             playerFunds = playerData[2];
             playerColour = playerData[3];
+            playerIncome = playerData[5];
+            progress = playerData[4];
         }
     });
 }
 function strToWage(str) {
-    //do something
+    arr = (str.split(";")[0]).split(" ");
+    var X = 0;
+    var Xmult = 0;
+    var Y = 0;
+    var Ymult = 0;
+    var T = 0;
+    // X things per T
+    // OR
+    // X things Y other per T
+    X = parseInt(arr[0]);
+    switch (arr[1]) {
+        case "pence":
+            Xmult=1;
+            break;
+        case "shillings":
+            Xmult=12;
+            break;
+        case "pounds":
+            Xmult=240;
+            break;
+    }
+    if (arr[2] == "per") {
+        switch (arr[3]) {
+            case "day":
+                T = 0.05;
+                break;
+            case "week":
+                T = 0.25;
+                break;
+            case "month":
+                T = 1;
+                break;
+            case "annum":
+                T = 12;
+                break;
+        }
+    } else {
+        Y = parseInt(arr[2]);
+        switch (arr[3]) {
+            case "pence":
+                Ymult=1;
+                break;
+            case "shillings":
+                Ymult=12;
+                break;
+            case "pounds":
+                Ymult=240;
+                break;
+        }
+        switch (arr[5]) {
+            case "day":
+                T = 0.05;
+                break;
+            case "week":
+                T = 0.25;
+                break;
+            case "month":
+                T = 1;
+                break;
+            case "annum":
+                T = 12;
+                break;
+        }
+    }
+
+    var wage = ((X*Xmult + Y*Ymult)/(240*T)).toFixed(2);
+    return wage;
+    // console.log(str+" -> "+wage);
 }
 
 function generateEmployee(prof,proj,option) {
@@ -85,24 +179,44 @@ function generateEmployee(prof,proj,option) {
                         empName = recordValue["Name"];
                         empPos = recordValue["Position"];
                         empDep = recordValue["Branch"];
-                        empPay = "30.00";
-                        // empPay = recordValue["Remuneration"];//convert to number
+                        empPay = "00.00";
+                        empPay = strToWage(recordValue["Remuneration"]);//convert to number
                     });
+                    var query = empPos.replace(/ /g,"|");
+                    var imageData="../images/placeholder.jpg"
                     $.ajax({
-                        url: "../database.php?action=createEmployee&uID="+uID+"&empName="+empName+"&empPos="+empPos+"&empDep="+empDep+"&empPay="+empPay+"&empProd="+productivity+"&empEdu="+education+"&empExp="+experience,
-                        //dataType: "json",
+                        url: "https://pixabay.com/api/?key=7227013-50ebabaacc01b845a5e54e34b&q="+query+"&image_type=photo&safesearch=true&category=people",
+                        dataType: "jsonp",
+                        cache: true,
                         success: function(results) {
-                            console.log("createEmpResults: "+results)
+                            if(results.hits.length > 0) {
+                                imageData = results.hits[(Math.round(Math.random()*results.hits.length))].largeImageURL;
+                                console.log("image: "+imageData);
+                            }
+                            
                             $.ajax({
-                                url: "../database.php?action=empToProj&empID="+results+"&pID="+proj+"&pos="+option,
-                                success: function(result2) {
-                                    console.log("Emp Created.")
+                                url: "../database.php?action=createEmployee&uID="+uID+"&empName="+empName+"&empPos="+empPos+"&empDep="+empDep+"&empPay="+empPay+"&empProd="+productivity+"&empEdu="+education+"&empExp="+experience+"&img="+imageData,
+                                //dataType: "json",
+                                success: function(results) {
+                                    console.log("createEmpResults: "+results)
+                                    if (!results.includes("ERROR")) {
+                                    // if (1) {
+                                        $.ajax({
+                                            url: "../database.php?action=empToProj&empID="+results+"&pID="+proj+"&pos="+option,
+                                            success: function(result2) {
+                                                console.log("Emp Created.")
+                                            }
+                                        });
+                                    }
+                                    
                                 }
                             });
-                            //updata project with employee ID
-                            //output employee data here
+
                         }
                     });
+
+
+
                 }
               });
 
@@ -110,7 +224,31 @@ function generateEmployee(prof,proj,option) {
       });
 
 }
+function iterateSabProjects(data) {
+    // projectID|projectName|projectCost|targetPlayer|userEffect|targetEffect
+    $(".sab-project").remove();
+    var projectTemplate = $(".sab-template");
+    var tempProjects = data.split(";");
+    for (i=0;i<tempProjects.length;i++) {
+        var project = tempProjects[i].split("|");
+        var projectID = project[0];
+        var projectName = project[1];
+        var projectCost = project[2];
+        var target = project[3];
+        var effect = project[4];
 
+        if (projectID && projectName) {
+            var clonedProjectTemplate = projectTemplate.clone();
+            clonedProjectTemplate.attr("id","sab-"+projectID).attr("class","sab-project");
+            clonedProjectTemplate.appendTo("#sab-projects");
+
+            $("#sab-"+projectID+" .project-name").html(projectName);
+            $("#sab-"+projectID+" .project-cost").html("£"+projectCost);
+            $("#sab-"+projectID+" .sab-effect").html(effect);
+            $("#sab-"+projectID+" .sab-details").html(tempProjects[i]);
+        }
+    }
+}
 function iterateProjects(data) {
     $(".project").remove();
     var projectTemplate = $(".project-template");
@@ -141,6 +279,14 @@ function getProjects() {
         success: function(results) {
             // console.log(results);
             iterateProjects(results);
+        }
+    });
+    $.ajax({
+        url: "../database.php?action=getSabProjects&uID="+uID,
+        //dataType: "json",
+        success: function(results) {
+            // console.log(results);
+            iterateSabProjects(results);
         }
     });
 }
@@ -175,6 +321,9 @@ function displayEmployees(eID1,eID2) {
                     $("#lightbox .employee:nth-of-type(2) .emp-stats .stat-bar:nth-of-type(2)").text(emp2[6]);
                     $("#lightbox .employee:nth-of-type(2) .emp-stats .stat-bar:nth-of-type(3)").text(emp2[7]);
 
+                    $("#lightbox .employee:nth-of-type(1) img").attr("src",emp1[8]);
+                    $("#lightbox .employee:nth-of-type(2) img").attr("src",emp2[8]);
+
                     // $(".stat-bar").css("background","linear-gradient(to right, green "+$(this).text()+"0%, #222222 "+$(this).text()+"1%)");
                     $.each($(".stat-bar"),function() {
                         var t = $(this).text();
@@ -186,14 +335,14 @@ function displayEmployees(eID1,eID2) {
     });
 }
 
-function displayProjectLightbox(template,data) {
+function displayProjectLightbox(template,data,attempt) {
     var lightbox = $("#lightbox");
     var projectData = data.split("|");
     lightbox.html(template);
     $("#lightbox .project-name").html(projectData[1]);
     $("#lightbox .project-cost").html(projectData[2]);
-    $("#lightbox .project-status").html(projectData[3]);
     $("#lightbox .project-required").html(projectData[4]);
+    $("#project-string").html(data);
     var emp1 = projectData[6];
     var emp2 = projectData[7];
     if (!emp1 || emp1=="0"){
@@ -210,7 +359,11 @@ function displayProjectLightbox(template,data) {
     }
     else {
         console.log("nope");
-        setTimeout(showProjectDetails,1000,projectData[0]);
+        if (attempt <3) {
+            setTimeout(showProjectDetails,1000,projectData[0],attempt+1);
+        } else {
+            alert("something went wrong, please try again");
+        }
     }
     
     // $.ajax({
@@ -222,7 +375,7 @@ function displayProjectLightbox(template,data) {
     
 }
 
-function showProjectDetails(pID) {
+function showProjectDetails(pID,attempt) {
     $.ajax({
         url: "../database.php?action=getProj&pID="+pID,
         //dataType: "json",
@@ -230,7 +383,7 @@ function showProjectDetails(pID) {
             $.ajax({
                 url: "../player/player-project.php",
                 success: function(template) {
-                    displayProjectLightbox(template,data);
+                    displayProjectLightbox(template,data,attempt);
                 }
             });
         }
@@ -254,6 +407,226 @@ function setPlayerColour(R,G,B) {
     });
 }
 
+function bailPlayer(){
+    var newFunds=Math.max(playerFunds/2,playerFunds-100);
+    var newProg=parseInt(progress);
+    var newInc=parseFloat(playerIncome);
+    if (playerIncome <0) {
+        newInc = 5.00;
+    } else {
+        newInc += 5.00;
+    }
+    if (newProg > 0) {
+        newProg -= 1;
+    } else {
+        newInc = 5.00;
+    }
+    
+    $.ajax({
+        url: "../database.php?action=setPlayerData&uID="+uID+"&col=projectMoney&val="+newFunds,
+        success: function(result) {
+            $.ajax({
+                url: "../database.php?action=setPlayerData&uID="+uID+"&col=userIncome&val="+newInc,
+                success: function(result) {
+                    $.ajax({
+                        url: "../database.php?action=setPlayerData&uID="+uID+"&col=gameProgress&val="+newProg,
+                        success: function(result) {
+                            playSound("fail");
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+function executeSabotage(details) {
+    //pID | name | cost | targetID | effect
+    var sab = details.split("|");
+    var sabName = sab[1].replace(/ /g,"+");
+
+    if (playerFunds >= parseFloat(sab[2])) {
+        var sabType = sab[4].split(",");
+        var uNewFund = parseFloat(playerFunds) - parseFloat(sab[2]);
+
+        $.ajax({
+            url: "../database.php?action=getPlayer&uID="+sab[3],
+            //dataType: "json",
+            success: function(result) {
+                //uID | nam | funds | colour | prog | inc
+                var targetData = result.split("|");
+                var tID = targetData[0];
+                var tFund = targetData[2]
+                var tProg = targetData[4];
+                var tInc = targetData[5];
+
+                var sabText= uID+"|"+tID+"|"+sabType[0]+"|"+sabType[1]+"|"+playerName+"+Completed+Project:+"+sabName;
+    
+                switch(sabType[0]) {
+                    case "PROG":
+                        var uNewProg = Math.min(15,parseInt(progress)+1);
+                        var tNewProg = Math.max(0,parseInt(tProg)-1);
+                        console.log(sabText);//-----------------
+                        $.ajax({
+                            url: "../database.php?action=setPlayerData&uID="+uID+"&col=projectMoney&val="+uNewFund,
+                            success: function(result) {
+                                $.ajax({
+                                    url: "../database.php?action=setPlayerData&uID="+tID+"&col=gameProgress&val="+tNewProg,
+                                    success: function(result) {
+                                        $.ajax({
+                                            url: "../database.php?action=setPlayerData&uID="+uID+"&col=gameProgress&val="+uNewProg,
+                                            success: function(result) {
+                                                $.ajax({
+                                                    url: "../database.php?action=sabComplete&pID="+sab[0]+"&sabText="+sabText,
+                                                    success: function(result) {
+                                                        getProjects();
+                                                        playSound("sab");
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                        break;
+                    case "INC":
+                        var uNewInc = parseFloat(playerIncome)+parseFloat(sabType[1]);
+                        var tNewInc = parseFloat(tInc) - parseFloat(sabType[1]);
+                        sabText += "+taking+%A3"+sabType[1]+"+per+month.";
+                        console.log(sabText);//---------------
+                        $.ajax({
+                            url: "../database.php?action=setPlayerData&uID="+uID+"&col=projectMoney&val="+uNewFund,
+                            success: function(result) {
+                                $.ajax({
+                                    url: "../database.php?action=setPlayerData&uID="+tID+"&col=userIncome&val="+tNewInc,
+                                    success: function(result) {
+                                        $.ajax({
+                                            url: "../database.php?action=setPlayerData&uID="+uID+"&col=userIncome&val="+uNewInc,
+                                            success: function(result) {
+                                                $.ajax({
+                                                    url: "../database.php?action=sabComplete&pID="+sab[0]+"&sabText="+sabText,
+                                                    success: function(result) {
+                                                        getProjects();
+                                                        playSound("sab");
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                        break;
+                    case "FUND":
+                            uNewFund += parseFloat(sabType[1]);
+                            var tNewFund = parseFloat(tFund) - parseFloat(sabType[1]);
+                            sabText += "+taking+%A3"+parseFloat(sabType[1])+".";
+                            console.log(sabText);//-----------------
+                                $.ajax({
+                                    url: "../database.php?action=setPlayerData&uID="+tID+"&col=projectMoney&val="+tNewFund,
+                                    success: function(result) {
+                                        $.ajax({
+                                            url: "../database.php?action=setPlayerData&uID="+uID+"&col=projectMoney&val="+uNewFund,
+                                            success: function(result) {
+                                                $.ajax({
+                                                    url: "../database.php?action=sabComplete&pID="+sab[0]+"&sabText="+sabText,
+                                                    success: function(result) {
+                                                        getProjects();
+                                                        playSound("sab");
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                        break;
+                }
+    
+
+            }
+        });
+
+    } else {
+        alert("You cant afford this");
+    }
+    
+    
+
+}
+
+function hireEmployee(empDetails,projDetails) {
+    var empData = empDetails.split("|");
+    var projData = projDetails.split("|");
+    // empID|empName|empPos|empDep|empPay|empProd|empEdu|empExp
+    // pID|projectName|projectCost|projectComplete|empRequired|projectPlayer|emp1|emp2
+
+    //playerFunds
+    //playerIncome
+    //pCost = projData[2]
+    //eWage = empData[4]
+    var funds = parseFloat(projData[2]);
+    var wage = parseFloat(empData[4]);
+
+    var newProg = parseInt(progress);
+    var newFunds = playerFunds;
+    var newInc = playerIncome;
+
+    if (playerFunds < funds ){
+        alert("You're too poor for that");
+    }
+    if (playerIncome <= wage) {
+        alert("you'll be losing money if this doesnt pay off");
+    }
+    if (playerFunds >= funds ) {
+        newFunds = playerFunds-funds;
+        newInc = playerIncome-wage;
+        var projStatus = "Incomplete;"
+
+        var failChance = Math.max(0,10-parseInt(empData[7])+Math.random()-0.5)/10;
+        if (Math.random() < failChance) {
+            // console.log("project failed. RIP");
+            projStatus="Project Failed";
+            playSound("fail");
+        } else {
+
+            newProg = Math.min(parseInt(progress)+1,15);
+            var reward = (Math.random()+0.5)*(parseInt(empData[5])/5)*(wage+funds/10);
+            // console.log("you passed, getting and extra "+reward.toFixed(2)+" per month");
+            newInc += reward;
+            projStatus = "Project Successful"
+            playSound("pass");
+
+            var bonusChance = (parseInt(empData[6])+ 2*Math.random()-1)/15;
+            if (Math.random() < bonusChance) {
+                newInc += 3*wage;
+                projStatus = "Project Very Successful"
+                playSound("bonus");
+                // console.log("yay you get extra money");
+            }
+
+        }
+    newInc = newInc.toFixed(2);
+    newFunds = newFunds.toFixed(2);
+    var incDiff = ((newInc-playerIncome) >=0)?"+"+(newInc-playerIncome).toFixed(2):(newInc-playerIncome).toFixed(2);
+    console.log("progress: "+newProg);
+    console.log("income: "+newInc);
+    console.log("funds: "+newFunds);
+    var projectResult = "<input type=\"button\" value=\"X\" class=\"close-preview\"> <section class=\"project-result\"><h1>"+projStatus+"</h1> <p> Railway Completion: "+(Math.round((newProg+1)*100/16))+"%</P> <p>Remaining Funds: £"+newFunds+"</p> <p>Income: "+newInc+"/month (£"+incDiff+")</p></section>";
+    $.ajax({
+        url: "../database.php?action=hireEmp&pID="+projData[0]+"&empID="+empData[0]+"&uID="+uID+"&funds="+newFunds+"&inc="+newInc+"&prog="+newProg,
+        success: function(template) {
+            // $(".lightbox").css("display","none");
+            $("#lightbox").html(projectResult);
+            $("#lightbox").addClass("result");
+            getProjects();
+            getPlayer();
+        }
+    });
+    }   
+
+}
+
 $(document).ready(function() {
     checkUID();
     getPlayer();
@@ -269,33 +642,58 @@ $(document).ready(function() {
     $("#clearStorage").click(function(event) {
         event.preventDefault();
         localStorage.clear();
+        playSound("click");
     });
-    $(document).on('click',".more-info",function() {
+    $(document).on('click',".project",function() {
         //start loading animation
-        var ID = $(this).parent().attr("id");
+        var ID = $(this).attr("id");
         var pID = ID.split("-")[1]
         console.log("pID: "+pID);
-        showProjectDetails(pID);
+        playSound("click");
+        showProjectDetails(pID,1);
+    });
+    $(document).on('click',".sabotage",function() {
+        //start loading animation
+        var details = $(this).parent().children(".sab-details").text();
+        console.log("sab: "+details);
+        executeSabotage(details);
     });
     $(document).on('click',"#lightbox .close-preview",function() {
+        $("#lightbox").removeClass("result");
         $("#lightbox").css("display","none");
+        playSound("click");
     });
     $(document).on('click',"#instructions .close-preview",function() {
         localStorage.setItem("intro","read");
         $("#instructions").css("display","none");
+        playSound("click");
     });
     $(document).on('click',"#lightbox .employee .emp-hire",function() {
         var empDetails = $(this).parent().children(".emp-details").text();
-        console.log("hire: "+empDetails);
+        var projDetails = $(this).parent().parent().children("#project-details").children("#project-string").text();
+        //------for debugging ----{
+        var empID = (empDetails).split("|")[0];
+        var projID = (projDetails).split("|")[0];
+        console.log("attempt to hire: "+empID+" for project: "+projID);
+        //-----}
+        playSound("click");
+        hireEmployee(empDetails,projDetails);
     });
     $(document).on('click',".colour-form input[type=button]",function() {
         var R = $(this).parent().children("input:nth-of-type(1)").val();
         var G = $(this).parent().children("input:nth-of-type(2)").val();
         var B = $(this).parent().children("input:nth-of-type(3)").val();
         setPlayerColour(R,G,B);
+        playSound("click");
     });
     $("#show-intro").click(function(event) {
         event.preventDefault();
         $("#instructions").css("display","flex");
+        playSound("click");
+    });
+    $(".bail-out").click(function(event) {
+        event.preventDefault();
+        playSound("click");
+        bailPlayer();
     })
 });

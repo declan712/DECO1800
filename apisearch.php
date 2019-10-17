@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>I like Trains</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700,900|Slabo+27px&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/script.js"></script>
@@ -11,7 +12,7 @@
 
 <body class="loaded">
     <?php include 'header.php'?>
-    <section>
+    <section id="api-search">
         train goes toot toot
         <form id="search">
             <input type="text" name="searchbar" id="searchbar" placeholder="Search Database">
