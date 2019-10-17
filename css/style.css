@@ -17,7 +17,7 @@ nav {
     z-index: 10;
     top:0;
     transition: top 0.4s ease;
-    background-color: #222222;
+    background-color: #362f2d;
     width:100%;
     color: #DDDDDD;
 }
@@ -84,7 +84,7 @@ body > section {
 /*------------------------------------------------------------*/
 
 footer {
-    background-color: #1f1f1f;
+    background-color: #362f2d;
     color: #DDDDDD;
     width: 100%;
     position: absolute;
