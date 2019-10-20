@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Game Screen</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700,900|Slabo+27px&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css"/>
     <link rel="stylesheet" href="../css/game.css"/>
     <link rel="stylesheet" href="../css/slider.css"/>
@@ -16,9 +17,11 @@
     <?php include '../header.php'?>
 
     <section id="game-screen">
-        <p id="game-time">TIME</p>
+        <div id="game-time">
+            <div id="progress-bar"></div>
+            <p>TIME</p>
+        </div>
         <section id="game-players">
-            <h1>Players</h1>
             <article class="player-template">
                 <h2 class="username">USER1</h2>
                 <h2>£<span class="funds">00.00</span></h2>
@@ -67,7 +70,7 @@
             </svg>
             <!-- <img src="../images/Choo2.png" id="game-train"> -->
         </section>
-        <section id="game-projects">
+        <!-- <section id="game-projects">
             <article class="project-template">
                 <input type="button" value="i" class="more-info">
                 <h2 class="project-name">project name</h2>
@@ -75,10 +78,9 @@
                 <p class="project-emp">example project employee</p>
                 
             </article>
-        </section>
+        </section> -->
         <section id="game-alerts">
             <article class="alert-template">
-                <h2 class="alert-name">alert name</h2>
                 <p class="alert-text">example alert text</p>
             </article>
         </section>

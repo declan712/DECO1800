@@ -4,6 +4,8 @@ jQuery.expr[':'].contains = function(a, i, m) {
 
 $(document).ready(function() {
 
+    $("#welcome-screen > img").css("transform","translateX(2%)");
+
     $("#main-nav h1").click(function(event) {
         event.preventDefault();
         $("#main-nav ul").toggleClass("collapsed");

@@ -1,17 +1,21 @@
 /*------------------------------------------------------------*/
 /*                      GAME SCREEN                           */
 /*------------------------------------------------------------*/
+body {
+    background: none;
+    background-color: #333333;
 
+}
 #game-screen {
     position: relative;
     display:grid;
     max-width:100%;
     width:100%;
-    height: 80vh;
-    grid-template-columns: 25% 50% 25%;
-    grid-template-rows: 50% 50%;
-    grid-template-areas: 'players game alerts'
-                         'players game projects';
+    height: 90vh;
+    grid-template-columns: 25% 60% 15%;
+    grid-template-rows: 100%;
+    grid-template-areas: 'players game alerts';
+    padding-top: 2em;
 }
 #lightbox {
     display:none;
@@ -31,30 +35,50 @@
     border-radius:1.5em;
 }
 #game-time{
+    width:100%;
+    display: flex;
+    justify-content: center;
     position: absolute;
     left:50%;
     transform: translateX(-50%);
+}
+#progress-bar {
+    z-index: -1;
+    position: absolute;
+    left:0;
+    background: green;
+    height:1.5em;
+    width:100%;
+    transition: all 10s linear;
 }
 #game-players {
     grid-area: players;
     background-color: #444444;
     overflow-y: scroll;
+    overflow-x:hidden;
+    margin-right:-16px;
 }
 #game-players .player {
     position: relative;
-    padding:1em;
+    padding:0.8em 1em;
     margin:0.2em;
     border-radius: 20px;
     background: linear-gradient(135deg, #DD7700, #AA22AA);
+    text-shadow: 1px 0px black, 
+                0px 1px black, 
+                -1px 0px black, 
+                0px -1px black;
 }
 #game-players .player .player-colour {
     position: absolute;
     right: 1em;
-    top: 1em;
-    width:50px;;
-    height:50px;
+    top: 50%;
+    width:4em;;
+    height:4em;
     /* border: 3px solid black; */
     border-radius:100%;
+    box-shadow: 0px 0px 5px 0px black;
+    transform: translateY(-50%);
 }
 .player-template {
     display:none;
@@ -62,29 +86,29 @@
 .project-template {
     display:none;
 }
-.alert-template {
-    /* display:none; */
-}
 #game-map {
     grid-area: game;
     background-color: #222222;
     background: urL(https://www.qhatlas.com.au/sites/default/files/imagecache/Large/QSA%20Item%20ID%20634523%20Cyclists%20road%20map%20of%20Brisbane%20and%20surrounds.jpg);
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 #game-alerts {
     grid-area: alerts;
     background-color: #444444;
+    overflow:hidden;
 }
 #game-alerts .alert {
     padding:1em;
     margin:0.2em;
     border-radius: 20px;
-    background: linear-gradient(135deg, #DD7700, #AA22AA);
+    background: url("../images/paper.jpg");
+    filter: hue-rotate(-20deg) saturate(1.5) contrast(1.5);
+    font-size: 0.9em;
 }
 .alert-template {
-    /* display:none; */
+    display:none;
 }
 #game-projects {
     grid-area: projects;
@@ -109,8 +133,8 @@ input[type="button"].more-info {
 }
 .station {
     text-align: center;
-    width:50px;
-    height:50px;
+    width:5em;
+    height:5em;
     border: 2px solid red;
     border-radius: 100%;
     position: absolute;
@@ -188,16 +212,17 @@ input[type="button"].more-info {
     position: relative;
 }
 .player-piece {
-    /* border:2px solid black; */
     border-radius: 100%;
-    width:50px;
-    height:50px;
-    margin-left:24px;
+    width:5em;
+    height: 5em;
+    margin-left:50%;
     transform: translateX(-50%);
+    margin-bottom: -3em;
+    box-shadow: 0px 0px 5px 0px black;
 }
 .choo {
-    border: 2px solid transparent;
-    width: 50px;
+    border: 0.4em solid transparent;
+    width: 100%;
 }
 #game-map svg {
     height:100%;
@@ -217,6 +242,7 @@ input[type="button"].more-info {
     transform: translate(-50%,-80%);
     /* animation: toot-toot 10s infinite ease; */
 }
+
 @keyframes toot-toot {
     0% {
         top:12.5%;
@@ -300,11 +326,22 @@ input[type="button"].more-info {
 @media screen and (max-width: 1080px) {
     #game-screen {
         height: auto;
-        grid-template-rows: 50vh auto auto auto;
+        grid-template-rows: 50vh auto auto;
         grid-template-columns: 100%;
         grid-template-areas: 'game'
                              'players'
-                             'alerts'
-                             'projects';
+                             'alerts';
+    }
+    .station {
+        width:3em;
+        height:3em;
+    }
+    .player-piece{
+        width:2em;
+        height:2em;
+        margin-bottom: -1em;
+    }
+    .choo {
+        border-width: 0.2em;
     }
 }

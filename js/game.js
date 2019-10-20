@@ -1,5 +1,7 @@
 var players = [];
 var positions = [];
+var currentMonth = 0;
+var suburbs=[];
 // uID, name, money, progress, colour, income
 
 function iteratePlayers(data) {
@@ -23,6 +25,8 @@ function iteratePlayers(data) {
             $("#player-"+playerID+" .username").html(playerName);
             $("#player-"+playerID+" .funds").html(playerMoney+" (+"+playerIncome+")");
             $("#player-"+playerID+" .player-colour").css("background-color","#"+playerColour);
+            $("#player-"+playerID).css("background","#"+playerColour+" linear-gradient(45deg, #222222AA 60%, transparent, #EEEEEE77)");//-------!
+
 
             var clonedPlayerPiece = $("#player-"+playerID+" .player-colour").clone();
             clonedPlayerPiece.attr("id","player-piece-"+playerID).attr("class","player-piece");
@@ -36,6 +40,7 @@ function iteratePlayers(data) {
             $("#player-"+playerID+" .username").html(playerName);
             $("#player-"+playerID+" .funds").html(playerMoney+" (+"+playerIncome+")");
             $("#player-"+playerID+" .player-colour").css("background-color","#"+playerColour);
+            $("#player-"+playerID).css("background","#"+playerColour+" linear-gradient(45deg, #222222AA 60%, transparent, #EEEEEE77)");//-------!
 
             var clonedPlayerPiece = $("#player-"+playerID+" .player-colour").clone();
             clonedPlayerPiece.attr("id","player-piece-"+playerID).attr("class","player-piece");
@@ -54,6 +59,36 @@ function getPlayers() {
         success: function(results) {
             // console.log(results);
             iteratePlayers(results);
+        }
+    });
+}
+
+
+
+function getAlerts() {
+    $.ajax({
+        url: "../database.php?action=getAlerts",
+        success: function(results) {
+            // console.log(results);
+            $(".alert").remove();
+            var alertTemplate = $(".alert-template");
+            var tempAlerts = results.split(";");
+
+            for (i=0;i<tempAlerts.length;i++) {
+                // alertID | userID | targetID | TYPE | AMOUNT | str
+                var alertDetails = tempAlerts[i].split("|");
+                var aID = alertDetails[0];
+                var alertStr = alertDetails[5];
+                if (aID && alertStr) {
+                    alertStr = alertStr.replace("�","£");
+                    var clonedAlertTemplate = alertTemplate.clone();
+                    clonedAlertTemplate.attr("id","alert-"+aID).attr("class","alert");
+                    clonedAlertTemplate.appendTo("#game-alerts");
+
+                    $("#alert-"+aID+" .alert-text").html(alertStr);
+                }
+                
+            }
         }
     });
 }
@@ -81,11 +116,12 @@ function drawLines() {
         var p2 = $(".station:nth-of-type("+(i+1)+")");
         var pos1 = p1.position();
         var pos2 = p2.position();
+        var stationwidth = parseInt($(".station").css("width"))/2;
         line
-            .attr('x1',pos1.left+25)
-            .attr('y1',pos1.top+25)
-            .attr('x2',pos2.left+25)
-            .attr('y2',pos2.top+25);
+            .attr('x1',pos1.left+stationwidth)
+            .attr('y1',pos1.top+stationwidth)
+            .attr('x2',pos2.left+stationwidth)
+            .attr('y2',pos2.top+stationwidth);
     }
 }
 function drawTime(time) {
@@ -131,7 +167,16 @@ function drawTime(time) {
             month = "not good";
     }
     var year = Math.floor((time-1)/12) + 1890;
-    $("#game-time").text(month+" "+year);
+    
+    if ($("#game-time p").text() != month+" "+year) {
+        $("#progress-bar").css("transition-duration","0s");
+        $("#progress-bar").css("width","1%");
+        setTimeout(function(){
+            $("#progress-bar").css("transition-duration","10s");
+            $("#progress-bar").css("width","100%");
+        },20);  
+    }
+    $("#game-time p").text(month+" "+year);
 }
 
 function getPositions() {
@@ -152,11 +197,56 @@ function getPositions() {
 };
 
 function generateProject() {
+    var action = ["Upgrade","Maintenance","Construction"];
+    var object = ["Station","Line"];
+    var rand1 = Math.floor(Math.random()*suburbs.length);
+    var rand2 = Math.floor(Math.random()*object.length);
+    var rand3 = Math.floor(Math.random()*action.length);
+
     var pDetails = [];
-    pDetails[0] = "test project "+Math.round(Math.random()*100);
-    pDetails[1] = (Math.random()*100).toFixed(2);
+    //project name
+    pDetails[0] = suburbs[rand1]+" "+object[rand2]+" "+action[rand3];
+    //project cost
+    pDetails[1] = (Math.random()*(20+1.5*parseInt(currentMonth))).toFixed(2);
+    //project employee
     pDetails[2] = positions[Math.round(Math.random()*positions.length)].Position;
     return pDetails;
+}
+
+function giveSabProject(user,target) {
+    var projDetails = generateProject();
+    projDetails[0] = "Sabotage "+target[1]+": ";
+    var sabEffect;
+    // types: 
+    //      1. steal 1 place
+    //      2. steal income
+    //      3. steal money
+    //      income debuff?
+    var sabType = Math.round(Math.random()*2);
+    switch (sabType) {
+        case 0:
+            projDetails[0] += "Steal a station";
+            sabEffect = "PROG,1";
+            break;
+        case 1:
+            projDetails[0] += "Steal employee";
+            var rand = (Math.random()*target[5]*0.6).toFixed(2);
+            sabEffect = "INC,"+rand;
+            projDetails[1] = Math.min(projDetails[1],rand*5);
+            break;
+        case 2:
+            projDetails[0] += "Steal cash";
+            var rand = (Math.random()*target[2]*0.6).toFixed(2);
+            sabEffect = "FUND,"+rand;
+            projDetails[1] = Math.min(projDetails[1],rand*0.75);
+            break;
+    }
+    $.ajax({
+        url: "../database.php?action=givePlayerSabProject&userID="+user[0]+"&targetID="+target[0]+"&pName="+projDetails[0]+"&pCost="+projDetails[1]+"&sabEffect="+sabEffect,
+        //dataType: "json",
+        success: function(results) {
+        }
+    });
 }
 
 //  give each player a project, and a chance of getting a sabatage project
@@ -177,9 +267,10 @@ function giveProjects() {
         });
         var curPos = parseInt(players[i][3])
         if ( curPos < fPos) {
-            var sabChance = Math.round(Math.random()*((fPos-curPos)/16)*100);
-            if (Math.round(Math.random()*100) < sabChance) {
+            var sabChance = Math.round(((fPos-curPos)/10)*100);
+            if (Math.random()*100 < sabChance) {
                 console.log(players[i][1]+" is "+(fPos-curPos)+" places behind and gets a chance to sabotage");
+                giveSabProject(players[i],firstPlace);
             }
             // console.log(players[i][1]+" is "+(fPos-curPos)+" places behind. Chance of sabotage: "+sabChance+"%");
         }
@@ -191,26 +282,38 @@ function updateTime() {
     $.ajax({
         url: "../database.php?action=getGameTime&gID="+gID,
         success: function(time) {
+            currentMonth = time;
             drawTime(parseInt(time));
+        }
+    });
+}
+
+function loadSuburbs() {
+    $.ajax({
+        url: "../suburbs.txt",
+        success: function(result) {
+            suburbs = result.split("|");
         }
     });
 }
 
 function refreshScreen() {
     getPlayers();
+    getAlerts();
     //getProjects();
     updateTime();
     // console.log("players: "+(players.length-1));
     // for (i=0;i<players.length-1;i++) {
     //     console.log("player "+i+": "+players[i]);
     // }
-    setTimeout(refreshScreen,5000);
+    setTimeout(refreshScreen,10000);
 }
 
 $(document).ready(function() {
     refreshScreen();
     drawLines();
     getPositions();
+    loadSuburbs();
 
 
     window.addEventListener("resize", drawLines);

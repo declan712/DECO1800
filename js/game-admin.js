@@ -1,5 +1,5 @@
 function move(pData,dir) {
-    playerData = pData.split(",");
+    playerData = pData.split("|");
     pPos = parseInt(playerData[4]);
     if (dir=="forward" && playerData[4] < 15) {
         $.ajax({
@@ -41,6 +41,24 @@ function movePlayer(pID, dir) {
 //     });
 // }
 
+function editProgress(playerID,money,inc,prog) { 
+    $.ajax({
+        url: "../database.php?action=setPlayerData&uID="+playerID+"&col=projectMoney&val="+money,
+        success: function(result) {
+            $.ajax({
+                url: "../database.php?action=setPlayerData&uID="+playerID+"&col=userIncome&val="+inc,
+                success: function(result) {
+                    $.ajax({
+                        url: "../database.php?action=setPlayerData&uID="+playerID+"&col=gameProgress&val="+prog,
+                        success: function(result) {
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
 function setPlayerFunds(playerID,money) {
     $.ajax({
         url: "../database.php?action=setPlayerData&uID="+playerID+"&col=projectMoney&val="+money,
@@ -57,6 +75,12 @@ function iteratePlayerIncome(players) {
         var playerMoney = player[2];
         var playerIncome = player[5];
         var newMoney = (parseFloat(playerMoney) + parseFloat(playerIncome)).toFixed(2);
+        if (newMoney <= 0.00) {
+            newMoney = 5.00;
+            var newProg = Math.max(0,parseInt(player[3])-1);
+            var newInc = 5.00;
+            editProgress(playerID,newMoney,newInc,newProg);
+        }
         $("#player-"+playerID+" .funds").html(newMoney+" (+"+playerIncome+")");
         setPlayerFunds(playerID,newMoney);
     }
@@ -90,7 +114,7 @@ function advanceTime() {
         success: function(time) {
             var currentTime = parseInt(time);
             var newTime = currentTime+1
-            if (newTime%3==0) {
+            if (newTime%3==1) {
                 giveProjects();
                 console.log("Generating Projects....");
             };
@@ -107,7 +131,7 @@ function advanceTime() {
 
 
 $(document).ready(function() {
-
+    giveProjects();
     setTimeout(advanceTime,2000);
 
     $("#delete-players").click(function(event) {
