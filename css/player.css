@@ -165,9 +165,7 @@
     filter: hue-rotate(-20deg) saturate(1.5) contrast(1.5);
     box-shadow: 3px 3px 10px 1px black;
 }
-.sab-project  *{
-    /* color: #111111EE; */
-}
+
 input[type="button"].sabotage {
     width: 2em;
     height: 2em;
